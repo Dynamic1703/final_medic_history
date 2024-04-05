@@ -337,7 +337,7 @@ public class DoctorPanelUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_homebuttonActionPerformed
-private void doctorpatientlistui(String doctorID) {
+private void doctorpatientlistui(String doctorID) throws SQLException {
         // Create an instance of the patient panel GUI
         Docpatientlist patientlistPanel = new Docpatientlist(doctorID,name);
 
@@ -352,7 +352,11 @@ System.out.println("hello3");
         // TODO add your handling code here:
         System.out.println("hello");
         
-        doctorpatientlistui(doctorID);
+        try {
+            doctorpatientlistui(doctorID);
+        } catch (SQLException ex) {
+            Logger.getLogger(DoctorPanelUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_patientlistbuttonActionPerformed
 
     /**
