@@ -186,7 +186,7 @@ public class Docpatientlist extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         docname = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        home = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         patientlist = new javax.swing.JLabel();
@@ -202,10 +202,10 @@ public class Docpatientlist extends javax.swing.JFrame {
 
         docname.setText("Doctor Name");
 
-        jButton6.setText("Home");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        home.setText("Home");
+        home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                homeActionPerformed(evt);
             }
         });
 
@@ -236,7 +236,7 @@ public class Docpatientlist extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
@@ -249,7 +249,7 @@ public class Docpatientlist extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel9)
                 .addGap(101, 101, 101)
-                .addComponent(jButton6)
+                .addComponent(home)
                 .addGap(29, 29, 29)
                 .addComponent(jButton7)
                 .addGap(34, 34, 34)
@@ -336,9 +336,12 @@ public class Docpatientlist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        DoctorPanelUI docpanel=new DoctorPanelUI(docID);
+        docpanel.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_homeActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
@@ -385,7 +388,7 @@ public class Docpatientlist extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel docname;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton home;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel9;
