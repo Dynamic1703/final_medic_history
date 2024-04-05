@@ -4,6 +4,31 @@
  */
 package project.MedicHistoryGUI;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import project.database.DatabaseConnection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.util.UUID;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author vaibh
@@ -15,41 +40,134 @@ public class Docpatientlist extends javax.swing.JFrame {
      */
     String docID;
     String docName;
-    public Docpatientlist(String doctorID,String docName) {
+    public Docpatientlist(String doctorID,String docName) throws SQLException {
         this.docID=doctorID;
         this.docName=docName;
         initComponents();
         uniqueid.setText("UniqueID:-"+this.docID);
-        docname.setText(this.docID);
-        dynamiccell();
-        dynamiccell();
+        docname.setText(this.docName);
+        int num = 0;
+      try (Connection connection = DatabaseConnection.getConnection()){
+    Statement stmt = connection.createStatement();
+    ResultSet rs;
+    rs = stmt.executeQuery("SELECT doctorID, COUNT(DISTINCT patientID) AS num_patients FROM current_appointment where doctorID = '" + doctorID + "'");
+    
+    // Check if the result set has any rows
+    if (rs.next()) {
+        // Retrieve the value of "num_patients" column
+        num = rs.getInt("num_patients");
+    } else {
+        // Handle the case where no rows were returned
+        // For example, set num to a default value or log a message
+        num = 0; // Default value
+        System.out.println("No rows returned from the query");
+    }
+} catch (SQLException ex) {
+    Logger.getLogger(Docpatientlist.class.getName()).log(Level.SEVERE, null, ex);
+}
+       System.out.println(num);
+            String name=null;
+            String phoneno=null;
+            String address=null;
+             try (Connection connection1 = DatabaseConnection.getConnection()){
+             Statement stmt1 = connection1.createStatement();
+             ResultSet rs1;
+             rs1 = stmt1.executeQuery("select distinct (patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID");
+          
+             //System.out.println(rs1.getString("name"));
+             for(int i=0;i<num;i++){
+                 if(rs1.next()){
+                      name = rs1.getString("name");
+        System.out.println("called");
+        phoneno=rs1.getString("phonenumber");
+        address=rs1.getString("address");
+        dynamiccell(name,phoneno,address);
+        //System.out.println("called");
+                 }
+                 else{
+                     System.out.println("calledelse");
+                 }
+             }
+             
+            
+}
+             catch (SQLException ex) {
+    Logger.getLogger(Docpatientlist.class.getName()).log(Level.SEVERE, null, ex);
+}
+    
+            
+ 
+        
     }
     
 //    welcomeDoctorName.setText(this.name+"👋");
-    private void dynamiccell()
-    {
+    private void dynamiccell(String name,String phoneno,String address)//for creating the dynamic cells having info about patients 
+    {   
+        
         javax.swing.JPanel cell;
         cell = new javax.swing.JPanel();
         cell.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        javax.swing.JLabel celltxt;
-        celltxt=new javax.swing.JLabel();
-        celltxt.setText("HELLLO");
+//        javax.swing.JLabel celltxt;
+//        celltxt=new javax.swing.JLabel();
+//        celltxt.setText("HELLLO");
+        
+        javax.swing.JLabel PatientNameField = new javax.swing.JLabel();
+        javax.swing.JLabel PatientAddressField = new javax.swing.JLabel();
+        javax.swing.JLabel LastVisited = new javax.swing.JLabel();
+        javax.swing.JLabel PatientPhoneNo = new javax.swing.JLabel();
+        javax.swing.JButton delete = new javax.swing.JButton();
+        
+        PatientNameField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        PatientNameField.setText(name);
+        System.out.println(name);
+
+        PatientAddressField.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        PatientAddressField.setText(address);
+
+        LastVisited.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        LastVisited.setText("Last Visited:Date");
+
+        PatientPhoneNo.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        PatientPhoneNo.setText(phoneno);
+
+        delete.setBackground(new java.awt.Color(242, 242, 242));
+        delete.setForeground(new java.awt.Color(255, 51, 51));
+        delete.setText("Delete");
+        
 
         javax.swing.GroupLayout cellLayout = new javax.swing.GroupLayout(cell);
         cell.setLayout(cellLayout);
         cellLayout.setHorizontalGroup(
             cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cellLayout.createSequentialGroup()
-                .addGap(205, 205, 205)
-                .addComponent(celltxt, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cellLayout.createSequentialGroup()
+                        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LastVisited)
+                            .addComponent(PatientAddressField)
+                            .addComponent(PatientNameField))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(cellLayout.createSequentialGroup()
+                        .addComponent(PatientPhoneNo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delete)
+                        .addGap(47, 47, 47))))
         );
         cellLayout.setVerticalGroup(
             cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cellLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(celltxt)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(PatientNameField)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PatientAddressField)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LastVisited)
+                .addGap(18, 18, 18)
+                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PatientPhoneNo)
+                    .addComponent(delete))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(cell);
