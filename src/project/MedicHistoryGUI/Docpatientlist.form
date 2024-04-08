@@ -51,16 +51,15 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="patientlist" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="426" max="-2" attributes="0"/>
-                                  <Component id="uniqueid" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="patientlist" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="204" max="-2" attributes="0"/>
+                          <Component id="uniqueid" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jPanel1" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
           </Group>
@@ -69,14 +68,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="uniqueid" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="patientlist" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="uniqueid" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <Component id="patientlist" min="-2" pref="33" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Component id="jPanel1" min="-2" pref="369" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -87,7 +91,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="186" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="248" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -123,26 +127,26 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Component id="docname" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
+                              <Component id="home" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jButton7" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="home" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
-                                      <Component id="jButton7" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Component id="docname" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton8" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jButton8" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -151,13 +155,13 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
-                          <Component id="home" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                          <Component id="jButton8" min="-2" pref="41" max="-2" attributes="0"/>
-                          <EmptySpace pref="37" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <Component id="home" min="-2" pref="47" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="jButton7" min="-2" pref="49" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="jButton8" min="-2" pref="53" max="-2" attributes="0"/>
+                          <EmptySpace pref="102" max="32767" attributes="0"/>
                           <Component id="docname" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
@@ -168,7 +172,7 @@
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Helvetica Neue" size="24" style="1"/>
+                      <Font name="Helvetica Neue" size="36" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Medic History"/>
                   </Properties>
@@ -180,6 +184,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="home">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="ff" red="33" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Home"/>
                   </Properties>
                   <Events>
@@ -188,6 +195,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton7">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="ff" red="33" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Patient List"/>
                   </Properties>
                   <Events>
@@ -196,6 +206,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton8">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="ff" red="33" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="New Prescription Reciept"/>
                   </Properties>
                   <Events>
@@ -209,7 +222,7 @@
         <Component class="javax.swing.JLabel" name="patientlist">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="24" style="1"/>
+              <Font name="Arial" size="36" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Current Patient List"/>
           </Properties>
