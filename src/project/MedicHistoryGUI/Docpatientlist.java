@@ -69,10 +69,11 @@ public class Docpatientlist extends javax.swing.JFrame {
             String name=null;
             String phoneno=null;
             String address=null;
+            String appointmentID=null;
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-             rs1 = stmt1.executeQuery("select distinct (patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID");
+             rs1 = stmt1.executeQuery("select distinct (patient.name),(patient.address),(patient.phonenumber),appointmentID from current_appointment join patient join doctor where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID");
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
@@ -81,7 +82,8 @@ public class Docpatientlist extends javax.swing.JFrame {
         System.out.println("called");
         phoneno=rs1.getString("phonenumber");
         address=rs1.getString("address");
-        dynamiccell(name,phoneno,address);
+        appointmentID=rs1.getString("appointmentID");
+        dynamiccell(name,phoneno,address,appointmentID);
         //System.out.println("called");
                  }
                  else{
@@ -98,7 +100,7 @@ public class Docpatientlist extends javax.swing.JFrame {
     }
     
 //    welcomeDoctorName.setText(this.name+"👋");
-    private void dynamiccell(String name,String phoneno,String address)//for creating the dynamic cells having info about patients 
+    private void dynamiccell(String name,String phoneno,String address,String appointmentID)//for creating the dynamic cells having info about patients 
     {   
         
         javax.swing.JPanel cell;
@@ -126,6 +128,11 @@ public class Docpatientlist extends javax.swing.JFrame {
         delete.setBackground(new java.awt.Color(242, 242, 242));
         delete.setForeground(new java.awt.Color(255, 51, 51));
         delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt,appointmentID);
+            }
+        });
         
 
         javax.swing.GroupLayout cellLayout = new javax.swing.GroupLayout(cell);
@@ -162,7 +169,39 @@ public class Docpatientlist extends javax.swing.JFrame {
         );
 
         jPanel1.add(cell);
+        jPanel1.revalidate();
+        jPanel1.repaint();  
     }
+    
+    private void deleteActionPerformed(ActionEvent evt,String appointmentID) {
+    JButton deleteButton = (JButton) evt.getSource();
+    JPanel cellPanel = (JPanel) deleteButton.getParent();
+    jPanel1.remove(cellPanel);
+     // Call method to delete patient from database passing appointmentID
+    deletePatientFromDatabase(appointmentID);
+    jPanel1.revalidate();
+    jPanel1.repaint();
+}
+    private void deletePatientFromDatabase(String appointmentID) {
+    System.out.println(appointmentID);
+    
+    try (Connection connection = DatabaseConnection.getConnection()) {
+        String sql = "DELETE FROM current_appointment WHERE appointmentID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, appointmentID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Patient removed from current appointment.");
+            } else {
+                System.out.println("Patient not found in current appointment.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Docpatientlist.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Docpatientlist.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
