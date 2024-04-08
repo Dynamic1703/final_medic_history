@@ -5,6 +5,8 @@
 package project.MedicHistoryGUI;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import project.database.DatabaseConnection;
 import java.sql.Statement;
 import java.sql.ResultSet;
-
+import java.sql.*;
 /**
  *
  * @author harshit_nagpal
@@ -26,6 +28,9 @@ public class DoctorPanelUI extends javax.swing.JFrame {
     private String name;
     private String spec;
     private String email;
+    private String selectedHospital;
+    private String hospital;
+
 //    private String bloodType;
     /**
      * Creates new form DoctorPanelUI
@@ -53,6 +58,53 @@ public class DoctorPanelUI extends javax.swing.JFrame {
             }
             edit.setVisible(false);
         } catch (SQLException ex) {
+        }
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement stmt = conn.createStatement();
+
+            String query = "SELECT h.name " +
+                           "FROM HOSPITAL h " +
+                           "INNER JOIN WORKS w ON h.hospitalID = w.hospitalID " +
+                           "WHERE w.doctorID = '" + doctorID + "'";
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                hospital = rs.getString("name");
+                hospitalname.setText(hospital);
+                System.out.println("Doctor with ID " + doctorID + " works at " + hospital + " hospital.");
+            } else {
+                System.out.println("Doctor with ID " + doctorID + " not found or not assigned to any hospital.");
+            }
+
+            rs.close();
+        }
+        catch(Exception e)
+        {
+
+        }
+        
+                try (Connection connection = DatabaseConnection.getConnection()) {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT name FROM Hospital");
+            while (rs.next()) {
+                HospitalDropDown.addItem(rs.getString("name"));
+            }
+                HospitalDropDown.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        selectedHospital = (String) e.getItem();
+                        System.out.println(selectedHospital);
+//                        populateDoctorComboBox(doctorComboBox, selectedHospital);
+                    }
+                }
+            });
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -84,14 +136,14 @@ public class DoctorPanelUI extends javax.swing.JFrame {
         closepopup = new javax.swing.JButton();
         submit = new javax.swing.JButton();
         positiontext = new javax.swing.JTextField();
-        hospitaltext = new javax.swing.JTextField();
+        HospitalDropDown = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         userId = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         specialisation = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        hospitalname = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         editinfo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -170,33 +222,39 @@ public class DoctorPanelUI extends javax.swing.JFrame {
             }
         });
 
+        HospitalDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HospitalDropDownActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout editLayout = new javax.swing.GroupLayout(edit);
         edit.setLayout(editLayout);
         editLayout.setHorizontalGroup(
             editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editLayout.createSequentialGroup()
-                .addGroup(editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(editLayout.createSequentialGroup()
+                .addGroup(editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(HospitalDropDown, 0, 236, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel4))
-                    .addGroup(editLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(editLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(editLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editLayout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addGroup(editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(submit)
                             .addComponent(closepopup)))
-                    .addGroup(editLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(positiontext, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
-                    .addGroup(editLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(hospitaltext)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                        .addComponent(positiontext)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         editLayout.setVerticalGroup(
             editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,8 +268,8 @@ public class DoctorPanelUI extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(hospitaltext, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addComponent(HospitalDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81)
                 .addComponent(submit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(closepopup)
@@ -243,9 +301,9 @@ public class DoctorPanelUI extends javax.swing.JFrame {
         specialisation.setForeground(new java.awt.Color(242, 242, 242));
         specialisation.setText("DOCTOR");
 
-        jLabel2.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(242, 242, 242));
-        jLabel2.setText("Hospital Name");
+        hospitalname.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+        hospitalname.setForeground(new java.awt.Color(242, 242, 242));
+        hospitalname.setText("Hospital Name");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/MedicHistoryGUI/WhatsApp Image 2024-04-08 at 23.22.15_a1b4f370.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
@@ -266,8 +324,8 @@ public class DoctorPanelUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(specialisation, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editinfo))
+                    .addComponent(editinfo)
+                    .addComponent(hospitalname, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, Short.MAX_VALUE)
                 .addContainerGap())
@@ -281,7 +339,7 @@ public class DoctorPanelUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(specialisation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(hospitalname)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(editinfo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -436,6 +494,14 @@ public class DoctorPanelUI extends javax.swing.JFrame {
 
     private void patientlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientlistActionPerformed
         // TODO add your handling code here:
+        System.out.println("hello");
+        
+        try {
+            doctorpatientlistui(doctorID);
+        } catch (SQLException ex) {
+            Logger.getLogger(DoctorPanelUI.class.getName()).log(Level.SEVERE, null, ex);
+}
+
     }//GEN-LAST:event_patientlistActionPerformed
 
     private void newpresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpresActionPerformed
@@ -465,16 +531,72 @@ public class DoctorPanelUI extends javax.swing.JFrame {
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:'
         editdetails();
+
     }//GEN-LAST:event_submitActionPerformed
     private void editdetails()
     {
-        String posn=positiontext.getText();
-        String hos=hospitaltext.getText();
         
+        String posn=positiontext.getText();
+        try(Connection conn= DatabaseConnection.getConnection()) {
+           Statement stmt=conn.createStatement();
+        String updateDoctorQuery = "UPDATE DOCTOR SET specialization = '" + posn + "' WHERE doctorID = ?";
+            PreparedStatement updateDoctorStmt = conn.prepareStatement(updateDoctorQuery);
+            updateDoctorStmt.setString(1, doctorID); // You need to provide the doctor_id here
+            updateDoctorStmt.executeUpdate();
+
+            // Update doctor's hospital
+            String updateHospitalQuery = "UPDATE WORKS SET hospitalID = (SELECT hospitalID FROM HOSPITAL WHERE name = ?) WHERE doctorID = ?";
+            PreparedStatement updateHospitalStmt = conn.prepareStatement(updateHospitalQuery);
+            updateHospitalStmt.setString(1, selectedHospital);
+            updateHospitalStmt.setString(2, doctorID); // You need to provide the doctor_id here
+            updateHospitalStmt.executeUpdate();
+
+            System.out.println("Doctor's specialization and hospital updated successfully.");
+//            selectedHospital
+            specialisation.setText(posn);
+            hospitalname.setText(selectedHospital);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+//        String hos=hospitaltext.getText();
+//        
+//        try (Connection conn = DatabaseConnection.getConnection()) {
+//            // Update specialization in DOCTOR table
+//            String updateSpecializationQuery = "UPDATE DOCTOR SET specialization = ? WHERE doctor_id = ?";
+//            updateDoctor(conn, updateSpecializationQuery, posn);
+//
+//            // Update hospital in WORKS table
+//            String updateHospitalQuery = "UPDATE WORKS SET hospital_id = (SELECT hospital_id FROM HOSPITAL WHERE name = ?) WHERE doctor_id = ?";
+//            updateHospital(conn, updateHospitalQuery, hos);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
+//     private static void updateDoctor(Connection conn, String query, String specialization) throws SQLException {
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setString(1, specialization);
+//            stmt.setInt(2, getDoctorId(conn));
+//            int rowsUpdated = stmt.executeUpdate();
+//            System.out.println(rowsUpdated + " row(s) updated in DOCTOR table.");
+//        }
+//    }
+//
+//    private static void updateHospital(Connection conn, String query, String hospital) throws SQLException {
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setString(1, hospital);
+//            stmt.setInt(2, getDoctorId(conn));
+//            int rowsUpdated = stmt.executeUpdate();
+//            System.out.println(rowsUpdated + " row(s) updated in WORKS table.");
+//        }
+//    }
+//    
     private void positiontextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_positiontextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_positiontextActionPerformed
+
+    private void HospitalDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HospitalDropDownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HospitalDropDownActionPerformed
 private void doctorpatientlistui(String doctorID) throws SQLException {
         // Create an instance of the patient panel GUI
         Docpatientlist patientlistPanel = new Docpatientlist(doctorID,name);
@@ -511,11 +633,12 @@ System.out.println("hello3");
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> HospitalDropDown;
     private javax.swing.JButton closepopup;
     private javax.swing.JLabel docname;
     private javax.swing.JPanel edit;
     private javax.swing.JButton editinfo;
-    private javax.swing.JTextField hospitaltext;
+    private javax.swing.JLabel hospitalname;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -523,7 +646,6 @@ System.out.println("hello3");
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
