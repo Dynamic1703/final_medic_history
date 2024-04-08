@@ -94,9 +94,6 @@ public class Docpatientlist extends javax.swing.JFrame {
              catch (SQLException ex) {
     Logger.getLogger(Docpatientlist.class.getName()).log(Level.SEVERE, null, ex);
 }
-    
-            
- 
         
     }
     
@@ -113,7 +110,6 @@ public class Docpatientlist extends javax.swing.JFrame {
         
         javax.swing.JLabel PatientNameField = new javax.swing.JLabel();
         javax.swing.JLabel PatientAddressField = new javax.swing.JLabel();
-        javax.swing.JLabel LastVisited = new javax.swing.JLabel();
         javax.swing.JLabel PatientPhoneNo = new javax.swing.JLabel();
         javax.swing.JButton delete = new javax.swing.JButton();
         
@@ -123,9 +119,6 @@ public class Docpatientlist extends javax.swing.JFrame {
 
         PatientAddressField.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         PatientAddressField.setText(address);
-
-        LastVisited.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        LastVisited.setText("Last Visited:Date");
 
         PatientPhoneNo.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         PatientPhoneNo.setText(phoneno);
@@ -144,7 +137,6 @@ public class Docpatientlist extends javax.swing.JFrame {
                 .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cellLayout.createSequentialGroup()
                         .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LastVisited)
                             .addComponent(PatientAddressField)
                             .addComponent(PatientNameField))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -162,7 +154,6 @@ public class Docpatientlist extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientAddressField)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LastVisited)
                 .addGap(18, 18, 18)
                 .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PatientPhoneNo)
