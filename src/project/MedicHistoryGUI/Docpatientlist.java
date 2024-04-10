@@ -53,7 +53,7 @@ public class Docpatientlist extends javax.swing.JFrame {
       try (Connection connection = DatabaseConnection.getConnection()){
     Statement stmt = connection.createStatement();
     ResultSet rs;
-    rs = stmt.executeQuery("SELECT doctorID, COUNT(DISTINCT patientID) AS num_patients FROM current_appointment where doctorID = '" + doctorID + "'");
+    rs = stmt.executeQuery("SELECT doctorID, COUNT(patientID) AS num_patients FROM current_appointment where doctorID = '" + doctorID + "'");
     
     // Check if the result set has any rows
     if (rs.next()) {
