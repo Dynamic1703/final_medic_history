@@ -422,6 +422,14 @@ System.out.println("hello3");
 
     private void medreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medreqActionPerformed
         // TODO add your handling code here:
+                try{
+                    MedRequest medreq=new MedRequest(docID,docName,email);
+                            medreq.setVisible(true);
+        this.dispose();
+                }
+        catch(Exception e)
+        {
+        }
 
     }//GEN-LAST:event_medreqActionPerformed
 

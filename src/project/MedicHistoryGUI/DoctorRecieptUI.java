@@ -1123,6 +1123,14 @@ System.out.println("hello3");
 
     private void medrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medrequestActionPerformed
         // TODO add your handling code here:
+                        try{
+                    MedRequest medreq=new MedRequest(docID,name,email);
+                            medreq.setVisible(true);
+        this.dispose();
+                }
+        catch(Exception e)
+        {
+        }
     }//GEN-LAST:event_medrequestActionPerformed
 
     /**

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import project.database.DatabaseConnection;
@@ -506,6 +508,16 @@ public class DoctorPanelUI extends javax.swing.JFrame {
 
     private void medreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medreqActionPerformed
         // TODO add your handling code here:
+        try{
+            MedRequest medreq=new MedRequest(doctorID,name,email);
+                    medreq.setVisible(true);
+        this.dispose();
+        }
+        catch(Exception e)
+        {
+        }
+
+        
     }//GEN-LAST:event_medreqActionPerformed
 
     private void newpresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpresActionPerformed
@@ -558,6 +570,7 @@ public class DoctorPanelUI extends javax.swing.JFrame {
 //            selectedHospital
             specialisation.setText(posn);
             hospitalname.setText(selectedHospital);
+            JOptionPane.showMessageDialog(null, "Details updated succesfuly");
         } catch (SQLException se) {
             se.printStackTrace();
         }
