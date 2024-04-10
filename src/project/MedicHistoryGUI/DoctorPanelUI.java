@@ -599,7 +599,7 @@ public class DoctorPanelUI extends javax.swing.JFrame {
     }//GEN-LAST:event_HospitalDropDownActionPerformed
 private void doctorpatientlistui(String doctorID) throws SQLException {
         // Create an instance of the patient panel GUI
-        Docpatientlist patientlistPanel = new Docpatientlist(doctorID,name);
+        Docpatientlist patientlistPanel = new Docpatientlist(doctorID,name,email);
 
         // Show the patient panel GUI
         System.out.println(doctorID);
