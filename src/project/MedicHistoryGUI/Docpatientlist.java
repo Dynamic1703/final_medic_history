@@ -73,7 +73,7 @@ public class Docpatientlist extends javax.swing.JFrame {
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-             rs1 = stmt1.executeQuery("select distinct (patient.name),(patient.address),(patient.phonenumber),appointmentID from current_appointment join patient join doctor where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID");
+             rs1 = stmt1.executeQuery("select distinct(appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID");
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
@@ -111,12 +111,15 @@ public class Docpatientlist extends javax.swing.JFrame {
 //        celltxt.setText("HELLLO");
         
         javax.swing.JLabel PatientNameField = new javax.swing.JLabel();
+        javax.swing.JLabel AppointmentID = new javax.swing.JLabel();
         javax.swing.JLabel PatientAddressField = new javax.swing.JLabel();
         javax.swing.JLabel PatientPhoneNo = new javax.swing.JLabel();
         javax.swing.JButton delete = new javax.swing.JButton();
         
         PatientNameField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         PatientNameField.setText(name);
+        AppointmentID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        AppointmentID.setText(appointmentID);
         System.out.println(name);
 
         PatientAddressField.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
@@ -146,6 +149,7 @@ public class Docpatientlist extends javax.swing.JFrame {
                         .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PatientAddressField)
                             .addComponent(PatientNameField))
+                            .addComponent(AppointmentID)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(cellLayout.createSequentialGroup()
                         .addComponent(PatientPhoneNo)
@@ -158,6 +162,7 @@ public class Docpatientlist extends javax.swing.JFrame {
             .addGroup(cellLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PatientNameField)
+                 .addComponent(AppointmentID)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientAddressField)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
