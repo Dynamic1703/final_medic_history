@@ -151,8 +151,8 @@ public class DoctorPanelUI extends javax.swing.JFrame {
         docname = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         patientlist = new javax.swing.JButton();
-        newpres = new javax.swing.JButton();
         medreq = new javax.swing.JButton();
+        newpres = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -373,23 +373,23 @@ public class DoctorPanelUI extends javax.swing.JFrame {
             }
         });
 
-        newpres.setBackground(new java.awt.Color(102, 102, 255));
-        newpres.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        newpres.setForeground(new java.awt.Color(255, 255, 255));
-        newpres.setText("Med Request");
-        newpres.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newpresActionPerformed(evt);
-            }
-        });
-
         medreq.setBackground(new java.awt.Color(102, 102, 255));
         medreq.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         medreq.setForeground(new java.awt.Color(255, 255, 255));
-        medreq.setText("Create New Prescription");
+        medreq.setText("Med Request");
         medreq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 medreqActionPerformed(evt);
+            }
+        });
+
+        newpres.setBackground(new java.awt.Color(102, 102, 255));
+        newpres.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        newpres.setForeground(new java.awt.Color(255, 255, 255));
+        newpres.setText("Create New Prescription");
+        newpres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newpresActionPerformed(evt);
             }
         });
 
@@ -404,8 +404,8 @@ public class DoctorPanelUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(newpres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(medreq, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(medreq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newpres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(patientlist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -419,11 +419,11 @@ public class DoctorPanelUI extends javax.swing.JFrame {
                 .addGap(68, 68, 68)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(newpres, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(medreq, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(patientlist, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(medreq, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(newpres, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(docname)
                 .addGap(28, 28, 28))
@@ -504,13 +504,16 @@ public class DoctorPanelUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_patientlistActionPerformed
 
-    private void newpresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newpresActionPerformed
-
     private void medreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medreqActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_medreqActionPerformed
+
+    private void newpresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpresActionPerformed
+        // TODO add your handling code here:
+        DoctorRecieptUI docrec=new DoctorRecieptUI(doctorID,name,email);
+        docrec.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_newpresActionPerformed
 
     private void editinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editinfoActionPerformed
                 // TODO add your handling code here:

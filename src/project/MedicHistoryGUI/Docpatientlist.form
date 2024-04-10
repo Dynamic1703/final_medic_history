@@ -138,8 +138,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="newpres" alignment="1" max="32767" attributes="0"/>
-                      <Component id="medreq" alignment="0" max="32767" attributes="0"/>
+                      <Component id="medreq" alignment="1" max="32767" attributes="0"/>
+                      <Component id="newpres" alignment="0" max="32767" attributes="0"/>
                       <Component id="patientlist1" alignment="1" max="32767" attributes="0"/>
                       <Component id="home" alignment="1" max="32767" attributes="0"/>
                   </Group>
@@ -156,11 +156,11 @@
                   <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                   <Component id="home" min="-2" pref="64" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="newpres" min="-2" pref="63" max="-2" attributes="0"/>
+                  <Component id="medreq" min="-2" pref="63" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="patientlist1" min="-2" pref="59" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="medreq" min="-2" pref="67" max="-2" attributes="0"/>
+                  <Component id="newpres" min="-2" pref="67" max="-2" attributes="0"/>
                   <EmptySpace pref="116" max="32767" attributes="0"/>
                   <Component id="docname" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
@@ -219,7 +219,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="patientlist1ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="newpres">
+        <Component class="javax.swing.JButton" name="medreq">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="66" red="66" type="rgb"/>
@@ -233,10 +233,10 @@
             <Property name="text" type="java.lang.String" value="Med Request"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newpresActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medreqActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="medreq">
+        <Component class="javax.swing.JButton" name="newpres">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="66" red="66" type="rgb"/>
@@ -250,7 +250,7 @@
             <Property name="text" type="java.lang.String" value="Create New Prescription"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medreqActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newpresActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
