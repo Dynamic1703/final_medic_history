@@ -157,6 +157,9 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     name1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 14)); // NOI18N
     name1.setForeground(new java.awt.Color(242, 242, 242));
     name1.setText(name);
+    java.awt.Dimension size = name1.getPreferredSize();
+size.width = 200; // Set the desired width here
+name1.setPreferredSize(size);
 
     address1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     address1.setForeground(new java.awt.Color(242, 242, 242));

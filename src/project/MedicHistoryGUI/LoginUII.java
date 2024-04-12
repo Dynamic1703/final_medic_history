@@ -211,21 +211,21 @@ String email = usernameField.getText();
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        try {
-            javax.swing.UIManager.setLookAndFeel(new FlatIntelliJLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(PatientPanelUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginUII().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        try {
+//            javax.swing.UIManager.setLookAndFeel(new FlatIntelliJLaf());
+//        } catch (UnsupportedLookAndFeelException ex) {
+//            Logger.getLogger(PatientPanelUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new LoginUII().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LoginDoctor;

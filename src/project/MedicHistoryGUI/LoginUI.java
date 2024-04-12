@@ -8,6 +8,10 @@ package project.MedicHistoryGUI;
  *
  * @author harshit_nagpal
  */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.sql.Connection;
 import project.database.DatabaseConnection;
@@ -43,7 +47,7 @@ public class LoginUI extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         passwordField = new javax.swing.JPasswordField();
         LoginPatient = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        doctorbutton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
@@ -73,10 +77,10 @@ public class LoginUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Sign in as Doctor");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        doctorbutton.setText("Sign in as Doctor");
+        doctorbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                doctorbuttonActionPerformed(evt);
             }
         });
 
@@ -90,7 +94,7 @@ public class LoginUI extends javax.swing.JFrame {
             }
         });
 
-        signUp.setText("New Patient Registration");
+        signUp.setText("Register");
         signUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signUpActionPerformed(evt);
@@ -108,8 +112,8 @@ public class LoginUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 879, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,35 +133,32 @@ public class LoginUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(doctorbutton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                                .addComponent(LoginPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(32, 32, 32))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(22, 22, 22)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                                        .addComponent(LoginPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(32, 32, 32))
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(22, 22, 22)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(usernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                                            .addComponent(passwordField)))
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(131, 131, 131))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(signUp, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 71, Short.MAX_VALUE))))
+                                    .addComponent(usernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                                    .addComponent(passwordField)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(131, 131, 131))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(signUp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(151, 151, 151))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,11 +177,11 @@ public class LoginUI extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(doctorbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LoginPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(signUp, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(244, 244, 244))
+                .addGap(257, 257, 257))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -194,9 +195,45 @@ public class LoginUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void doctorbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorbuttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+          String email = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+        
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM Doctor WHERE email = ? AND password = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            
+
+            if (rs.next()) {
+                String userID = rs.getString("name");
+                showDoctorPanel(rs.getString("doctorID"));
+                System.out.println(userID);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException ex) {
+        }
+    }//GEN-LAST:event_LoginDoctorActionPerformed
+
+    private void showDoctorPanel(String doctorID) {
+        // Create an instance of the patient panel GUI
+        DoctorPanelUI doctorPanel = new DoctorPanelUI(doctorID);
+
+        // Show the patient panel GUI
+        doctorPanel.setVisible(true);
+
+        // Dispose or hide the login GUI
+        this.dispose(); // or this.setVisible(false);
+    
+    }//GEN-LAST:event_doctorbuttonActionPerformed
 
     private void showPatientPanel(String patientID) {
         // Create an instance of the patient panel GUI
@@ -236,14 +273,53 @@ public class LoginUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_LoginPatientActionPerformed
 
+//    signupUI sui=new signupUI();
+//                sui.show();
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
 
         // TODO add your handling code here:
-        dispose();
-                signupUI sui=new signupUI();
-                sui.show();
+        showPopoutPanel();
+                
     }//GEN-LAST:event_signUpActionPerformed
 
+    private void showPopoutPanel() {
+    JFrame popoutFrame = new JFrame();
+    popoutFrame.setTitle("Registration Options");
+    popoutFrame.setSize(300, 200);
+    popoutFrame.setLocationRelativeTo(null);
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = GridBagConstraints.RELATIVE;
+    gbc.insets = new Insets(5, 5, 5, 5);
+    gbc.anchor = GridBagConstraints.CENTER;
+
+    JButton patientRegistrationButton = new JButton("Patient Registration");
+    JButton doctorRegistrationButton = new JButton("Doctor Registration");
+
+    patientRegistrationButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            // Handle patient registration
+            signupUI sui = new signupUI();
+            sui.setVisible(true);
+            dispose();
+        }
+    });
+
+    doctorRegistrationButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            // Handle doctor registration
+            signupUId suid = new signupUId();
+            suid.setVisible(true);
+            dispose();
+        }
+    });
+
+    panel.add(patientRegistrationButton, gbc);
+    panel.add(doctorRegistrationButton, gbc);
+    popoutFrame.add(panel);
+    popoutFrame.setVisible(true);
+}
     /**
      * @param args the command line arguments
      */
@@ -265,7 +341,7 @@ public class LoginUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LoginPatient;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton doctorbutton;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
