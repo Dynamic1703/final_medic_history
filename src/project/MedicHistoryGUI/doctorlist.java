@@ -69,7 +69,7 @@ public class doctorlist extends javax.swing.JFrame {
         Statement statement = connection.createStatement();
         
             // Execute the query
-            String query = "SELECT appointmentID,doctorID FROM current_appointment WHERE patientID = " + patientID;
+            String query = "SELECT appointmentID,doctorID FROM current_appointment WHERE patientID = '" + patientID+"'";
             
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -124,7 +124,7 @@ for (String element : doctorIds) {
              
             
            
-            String nameq="Select name from patient where patientID="+patientID;
+            String nameq="Select name from patient where patientID= '"+patientID+"'";
             ResultSet resultSet = statement.executeQuery(nameq);
             while (resultSet.next()) {
                

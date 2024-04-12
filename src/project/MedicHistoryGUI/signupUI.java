@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.UUID;
 public class signupUI extends javax.swing.JFrame {
        ArrayList<String> emails=new ArrayList<>();
        ArrayList<String> phoneNumbers=new ArrayList<>();
@@ -306,26 +307,9 @@ public class signupUI extends javax.swing.JFrame {
         phno = edtphno.getText();
         address = edtaddr.getText();
         Statement stmt=null;
-        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        // Define the length of the random value
-        int length = 6;
-
-        // Create a StringBuilder to store the random value
-        StringBuilder randomValue = new StringBuilder();
-
-        // Create a SecureRandom object to generate random values
-        SecureRandom secureRandom = new SecureRandom();
-
-        // Generate the random value
-        for (int i = 0; i < length; i++) {
-            // Generate a random index to select a character from the characters string
-            int randomIndex = secureRandom.nextInt(characters.length());
-
-            // Append the selected character to the random value
-            randomValue.append(characters.charAt(randomIndex));
-        }
-        String ID=randomValue.toString();
+       UUID uuid = UUID.randomUUID();
+            String ID = uuid.toString();
+        
         
                        if (email.isEmpty() || name.isEmpty()|| address.isEmpty() ||
             bltype.isEmpty() || phno.isEmpty()|| weights.isEmpty() || heights.isEmpty() || address.isEmpty() || gender.isEmpty() || password.isEmpty()) {
