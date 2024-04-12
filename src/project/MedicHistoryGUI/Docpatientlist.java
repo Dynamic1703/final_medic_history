@@ -53,8 +53,8 @@ public class Docpatientlist extends javax.swing.JFrame {
       try (Connection connection = DatabaseConnection.getConnection()){
     Statement stmt = connection.createStatement();
     ResultSet rs;
-    rs = stmt.executeQuery("SELECT doctorID, COUNT(patientID) AS num_patients FROM current_appointment where doctorID = '" + doctorID + "'");
-    
+     rs = stmt.executeQuery("select ca.doctorID, COUNT(ca.patientID) as num_patients FROM current_appointment ca join appointment a ON ca.appointmentID = a.appointmentID where ca.doctorID = '" + doctorID + "' AND a.is_confirmed = '1'");
+   
     // Check if the result set has any rows
     if (rs.next()) {
         // Retrieve the value of "num_patients" column
@@ -76,7 +76,7 @@ public class Docpatientlist extends javax.swing.JFrame {
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-             rs1 = stmt1.executeQuery("select distinct(appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID");
+             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and appointment.is_confirmed= '1'");
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
