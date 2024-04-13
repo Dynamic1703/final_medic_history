@@ -76,16 +76,18 @@ public class MedRequest extends javax.swing.JFrame {
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and appointment.is_confirmed= '0'");
+             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '0'");
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
+                 System.out.println("vah");
                  if(rs1.next()){
                       name = rs1.getString("name");
         System.out.println("called");
         phoneno=rs1.getString("phonenumber");
         address=rs1.getString("address");
         appointmentID=rs1.getString("appointmentID");
+        System.out.println(appointmentID);
         dynamiccell(name,phoneno,address,appointmentID);
         //System.out.println("called");
                  }
@@ -93,7 +95,7 @@ public class MedRequest extends javax.swing.JFrame {
                      System.out.println("calledelse");
                  }
              }
-             
+            
             
 }
              catch (SQLException ex) {
@@ -157,9 +159,9 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     name1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 14)); // NOI18N
     name1.setForeground(new java.awt.Color(242, 242, 242));
     name1.setText(name);
-    java.awt.Dimension size = name1.getPreferredSize();
-size.width = 200; // Set the desired width here
-name1.setPreferredSize(size);
+//    java.awt.Dimension size = name1.getPreferredSize();
+//size.width = 200; // Set the desired width here
+//name1.setPreferredSize(size);
 
     address1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     address1.setForeground(new java.awt.Color(242, 242, 242));
