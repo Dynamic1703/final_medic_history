@@ -44,27 +44,20 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
      * Creates new form DoctorRecieptUI
      */
     private String docID;
-    private String name;
+    private String docName;
     private String email;
     private String AppID;
     private List<List<String>> prescriptionList = new ArrayList<>();
 
-    public DoctorRecieptUI(String docID) {
-        this.docID=docID;
+    public DoctorRecieptUI(String docID, String docName, String email) {
+        
+        this.docID = docID;
+        this.docName = docName;
+        this.email = email;
+        
         initComponents();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String formattedDateTime = now.format(formatter);
-        datepresField.setText(formattedDateTime);
-        followupField.setText(formattedDateTime);
-    }
-    public DoctorRecieptUI(String docID,String name,String email) {
-        this.docID=docID;
-        this.name=name;
-        this.email=email;
-        initComponents();
-
+        docname.setText(this.docName);
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String formattedDateTime = now.format(formatter);
@@ -231,11 +224,11 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        PatientNameField = new javax.swing.JLabel();
-        home = new javax.swing.JButton();
-        patientlist = new javax.swing.JButton();
+        docname = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        medrequest = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -294,46 +287,46 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Helvetica Neue", 1, 36)); // NOI18N
         jLabel9.setText("Medic History");
 
-        PatientNameField.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        PatientNameField.setText("DoctorName");
+        docname.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        docname.setText("DoctorName");
 
-        home.setBackground(new java.awt.Color(102, 102, 255));
-        home.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        home.setForeground(new java.awt.Color(255, 255, 255));
-        home.setText("Home");
-        home.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setBackground(new java.awt.Color(102, 102, 255));
+        jButton6.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Home");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeActionPerformed(evt);
+                jButton6ActionPerformed(evt);
             }
         });
 
-        patientlist.setBackground(new java.awt.Color(102, 102, 255));
-        patientlist.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        patientlist.setForeground(new java.awt.Color(255, 255, 255));
-        patientlist.setText("Appointment List");
-        patientlist.addActionListener(new java.awt.event.ActionListener() {
+        jButton7.setBackground(new java.awt.Color(102, 102, 255));
+        jButton7.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("MedRequest");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                patientlistActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
 
         jButton8.setBackground(new java.awt.Color(102, 102, 255));
         jButton8.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Create New Pres. Reciept");
+        jButton8.setText("Create New Pres. Recipet");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
 
-        medrequest.setBackground(new java.awt.Color(102, 102, 255));
-        medrequest.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        medrequest.setForeground(new java.awt.Color(255, 255, 255));
-        medrequest.setText("Med Request");
-        medrequest.addActionListener(new java.awt.event.ActionListener() {
+        jButton9.setBackground(new java.awt.Color(102, 102, 255));
+        jButton9.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Appointment List");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                medrequestActionPerformed(evt);
+                jButton9ActionPerformed(evt);
             }
         });
 
@@ -343,16 +336,16 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
-                .addComponent(PatientNameField)
+                .addComponent(docname)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(medrequest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(patientlist, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35))
         );
         jPanel2Layout.setVerticalGroup(
@@ -361,15 +354,15 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel9)
                 .addGap(68, 68, 68)
-                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(medrequest, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(patientlist, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(PatientNameField)
+                .addComponent(docname)
                 .addGap(28, 28, 28))
         );
 
@@ -724,43 +717,26 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-                        DoctorPanelUI homePanel = new DoctorPanelUI(docID);
-
-        // Show the patient panel GUI
-//        System.out.println(doctorID);
-        homePanel.setVisible(true);
-System.out.println("hello3");
-        // Dispose or hide the login GUI
-        this.dispose();
-    }//GEN-LAST:event_homeActionPerformed
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    
-private void doctorpatientlistui(String doctorID) throws SQLException {
-        // Create an instance of the patient panel GUI
-        Docpatientlist patientlistPanel = new Docpatientlist(doctorID,name,email);
-
-        // Show the patient panel GUI
-        System.out.println(doctorID);
-        patientlistPanel.setVisible(true);
-System.out.println("hello3");
-        // Dispose or hide the login GUI
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       // TODO add your handling code here:
+                try{
+                    MedRequest medreq=new MedRequest(docID,docName,email);
+                            medreq.setVisible(true);
         this.dispose();
-    }
-    private void patientlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientlistActionPerformed
-        // TODO add your handling code here:
-                try {
-            doctorpatientlistui(docID);
-        } catch (SQLException ex) {
-            Logger.getLogger(DoctorPanelUI.class.getName()).log(Level.SEVERE, null, ex);
-        
-    }//GEN-LAST:event_patientlistActionPerformed
-    }
+                }
+        catch(Exception e)
+        {
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     private void searchPresFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPresFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchPresFieldActionPerformed
@@ -1121,70 +1097,48 @@ System.out.println("hello3");
         // TODO add your handling code here:
     }//GEN-LAST:event_AppointmentFieldActionPerformed
 
-    private void medrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medrequestActionPerformed
-        // TODO add your handling code here:
-                        try{
-                    MedRequest medreq=new MedRequest(docID,name,email);
-                            medreq.setVisible(true);
-        this.dispose();
-                }
-        catch(Exception e)
-        {
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+         Docpatientlist patientlistPanel;
+        try {
+            patientlistPanel = new Docpatientlist(docID,docName,email);
+            patientlistPanel.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(DoctorRecieptUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_medrequestActionPerformed
+
+        // Show the patient panel GUI
+      
+        
+
+        // Dispose or hide the login GUI
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(DoctorRecieptUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(DoctorRecieptUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(DoctorRecieptUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(DoctorRecieptUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new DoctorRecieptUI().setVisible(true);
-//            }
-//        });
-//    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AppointmentField;
-    private javax.swing.JLabel PatientNameField;
     private javax.swing.JPanel PrescriptionTable;
     private javax.swing.JTextField addField;
     private javax.swing.JTextField ageField;
     private javax.swing.JTextField datepresField;
     private javax.swing.JTextArea diagnosisField;
+    private javax.swing.JLabel docname;
     private javax.swing.JTextField followupField;
     private javax.swing.JTextField genderField;
     private javax.swing.JTextField heightField;
-    private javax.swing.JButton home;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1209,9 +1163,7 @@ System.out.println("hello3");
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton medrequest;
     private javax.swing.JTextField nameField;
-    private javax.swing.JButton patientlist;
     private javax.swing.JTextField searchPresField;
     private javax.swing.JPanel searchResultsPanel;
     private javax.swing.JTextField weightField;

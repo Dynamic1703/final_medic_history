@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 import project.database.DatabaseConnection;
 
@@ -212,26 +213,8 @@ name=jTextField1.getText();
 specialization=jTextField2.getText();
 email=jTextField3.getText();
 Statement stmt=null;
-        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        // Define the length of the random value
-        int length = 6;
-
-        // Create a StringBuilder to store the random value
-        StringBuilder randomValue = new StringBuilder();
-
-        // Create a SecureRandom object to generate random values
-        SecureRandom secureRandom = new SecureRandom();
-
-        // Generate the random value
-        for (int i = 0; i < length; i++) {
-            // Generate a random index to select a character from the characters string
-            int randomIndex = secureRandom.nextInt(characters.length());
-
-            // Append the selected character to the random value
-            randomValue.append(characters.charAt(randomIndex));
-        }
-        String ID=randomValue.toString();
+            UUID uuid = UUID.randomUUID();
+            String ID = uuid.toString();
         if (email.isEmpty() || name.isEmpty() ||  password.isEmpty() || hospital.isEmpty() || specialization.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill out all required fields.", "Warning", JOptionPane.WARNING_MESSAGE);
         return; // Exit the method if any required field is empty

@@ -155,6 +155,7 @@ public class DoctorPanelUI extends javax.swing.JFrame {
         patientlist = new javax.swing.JButton();
         medreq = new javax.swing.JButton();
         newpres = new javax.swing.JButton();
+        newpres1 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -395,14 +396,19 @@ public class DoctorPanelUI extends javax.swing.JFrame {
             }
         });
 
+        newpres1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        newpres1.setForeground(new java.awt.Color(102, 102, 255));
+        newpres1.setText("SignOut");
+        newpres1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newpres1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(docname)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -410,7 +416,13 @@ public class DoctorPanelUI extends javax.swing.JFrame {
                     .addComponent(newpres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(patientlist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(docname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(newpres1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(35, 35, 35))
         );
         jPanel2Layout.setVerticalGroup(
@@ -428,7 +440,9 @@ public class DoctorPanelUI extends javax.swing.JFrame {
                 .addComponent(newpres, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(docname)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(newpres1)
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -613,6 +627,13 @@ public class DoctorPanelUI extends javax.swing.JFrame {
     private void HospitalDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HospitalDropDownActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HospitalDropDownActionPerformed
+
+    private void newpres1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpres1ActionPerformed
+        LoginUI login = new LoginUI();
+       
+       login.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_newpres1ActionPerformed
 private void doctorpatientlistui(String doctorID) throws SQLException {
         // Create an instance of the patient panel GUI
         Docpatientlist patientlistPanel = new Docpatientlist(doctorID,name,email);
@@ -678,6 +699,7 @@ System.out.println("hello3");
     private javax.swing.JTable jTable1;
     private javax.swing.JButton medreq;
     private javax.swing.JButton newpres;
+    private javax.swing.JButton newpres1;
     private javax.swing.JButton patientlist;
     private java.awt.PopupMenu popupMenu1;
     private javax.swing.JTextField positiontext;

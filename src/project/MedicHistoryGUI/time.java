@@ -144,7 +144,7 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
         Statement statement = connection.createStatement();
         
             // Execute the query
-            String query = "SELECT appointmentID,doctorID FROM current_appointment WHERE patientID = " + patientID;
+            String query = "SELECT appointmentID,doctorID FROM current_appointment WHERE patientID = '" + patientID+"'";
             
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -198,7 +198,7 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
 ////             
             
            
-            String nameq="Select name from patient where patientID="+patientID;
+            String nameq="Select name from patient where patientID= '"+patientID+"'";
             ResultSet resultSet = statement.executeQuery(nameq);
             while (resultSet.next()) {
                

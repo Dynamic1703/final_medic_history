@@ -70,6 +70,8 @@ public class LoginUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        passwordField.setText("qwerty");
+
         LoginPatient.setText("Sign in as Patient");
         LoginPatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +90,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         jLabel3.setText("Email");
 
+        usernameField.setText("smith@gmail.com");
         usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameFieldActionPerformed(evt);
@@ -195,7 +198,7 @@ public class LoginUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void doctorbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorbuttonActionPerformed
+    private void doctorbuttonActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
           String email = usernameField.getText();
         String password = new String(passwordField.getPassword());
@@ -221,7 +224,7 @@ public class LoginUI extends javax.swing.JFrame {
             pstmt.close();
         } catch (SQLException ex) {
         }
-    }//GEN-LAST:event_LoginDoctorActionPerformed
+    }                                           
 
     private void showDoctorPanel(String doctorID) {
         // Create an instance of the patient panel GUI
@@ -233,7 +236,7 @@ public class LoginUI extends javax.swing.JFrame {
         // Dispose or hide the login GUI
         this.dispose(); // or this.setVisible(false);
     
-    }//GEN-LAST:event_doctorbuttonActionPerformed
+    }                                            
 
     private void showPatientPanel(String patientID) {
         // Create an instance of the patient panel GUI
@@ -249,7 +252,7 @@ public class LoginUI extends javax.swing.JFrame {
     private void LoginPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginPatientActionPerformed
         String email = usernameField.getText();
         String password = new String(passwordField.getPassword());
-        
+           System.out.println("HELLO");
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT * FROM Patient WHERE email = ? AND password = ?";
@@ -261,7 +264,7 @@ public class LoginUI extends javax.swing.JFrame {
             if (rs.next()) {
                 String userID = rs.getString("name");
                 showPatientPanel(rs.getString("patientID"));
-//                System.out.println(userID);
+                System.out.println(userID);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
