@@ -50,14 +50,14 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
     private List<List<String>> prescriptionList = new ArrayList<>();
 
     public DoctorRecieptUI(String docID, String docName, String email) {
-        
+
         this.docID = docID;
         this.docName = docName;
         this.email = email;
-        
+
         initComponents();
         docname.setText(this.docName);
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String formattedDateTime = now.format(formatter);
@@ -719,15 +719,15 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         // TODO add your handling code here:
-                        DoctorPanelUI homePanel = new DoctorPanelUI(docID);
+        DoctorPanelUI homePanel = new DoctorPanelUI(docID);
 
         // Show the patient panel GUI
 //        System.out.println(doctorID);
         homePanel.setVisible(true);
-System.out.println("hello3");
+        System.out.println("hello3");
         // Dispose or hide the login GUI
         this.dispose();
-        
+
     }//GEN-LAST:event_homeActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -735,14 +735,12 @@ System.out.println("hello3");
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void medreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medreqActionPerformed
-       // TODO add your handling code here:
-                try{
-                    MedRequest medreq=new MedRequest(docID,docName,email);
-                            medreq.setVisible(true);
-        this.dispose();
-                }
-        catch(Exception e)
-        {
+        // TODO add your handling code here:
+        try {
+            MedRequest medreq = new MedRequest(docID, docName, email);
+            medreq.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_medreqActionPerformed
 
@@ -823,10 +821,10 @@ System.out.println("hello3");
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    private String createNewPDF(){
+
+    private String createNewPDF() {
         String fname = null;
-          try {
+        try {
 
             PDDocument document = new PDDocument();
 
@@ -894,10 +892,8 @@ System.out.println("hello3");
             contentStream.showText(diagnosisField_.replace("\n", "").replace("\r", ""));
 
             contentStream.endText();
-            
-            
-            y -= leading * 15;
 
+            y -= leading * 15;
 
             // Add a table for prescriptions
             contentStream.beginText();
@@ -925,8 +921,6 @@ System.out.println("hello3");
             contentStream.endText();
 
             y -= leading;
-            
-            
 
 // Draw table rows
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 10);
@@ -948,36 +942,36 @@ System.out.println("hello3");
             document.save(fname);
 
             JOptionPane.showMessageDialog(null, "Medical Reciept PDF generated and stored successfuly");
-            
+
         } catch (IOException ex) {
             Logger.getLogger(DoctorRecieptUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-          return fname;
-         
-    }
-    
-    private void openPDFFile(String filePath) {
-    try {
-        File file = new File(filePath);
-        if (!Desktop.isDesktopSupported()) {
-            System.out.println("Desktop is not supported");
-            return;
-        }
+        return fname;
 
-        Desktop desktop = Desktop.getDesktop();
-        if (file.exists()) {
-            desktop.open(file);
-        } else {
-            System.out.println("File not found: " + filePath);
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}
-    
+
+    private void openPDFFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (!Desktop.isDesktopSupported()) {
+                System.out.println("Desktop is not supported");
+                return;
+            }
+
+            Desktop desktop = Desktop.getDesktop();
+            if (file.exists()) {
+                desktop.open(file);
+            } else {
+                System.out.println("File not found: " + filePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-      openPDFFile("./"+createNewPDF());
+        openPDFFile("./" + createNewPDF());
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -991,48 +985,56 @@ System.out.println("hello3");
         String weightField_ = weightField.getText();
         String datepresField_ = datepresField.getText();
         String diagnosisField_ = diagnosisField.getText();
-        System.out.println(diagnosisField_);
 
         try (Connection connection = DatabaseConnection.getConnection()) {
+            String drugs_sql = "INSERT INTO medicaldrug_appointmet (appointmentID, drug_id) VALUES (?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(drugs_sql)) {
+                for (List<String> prescription : prescriptionList) {
+                    String drugID = prescription.get(0); // Assuming drug_id is at index 0 in each prescription list
+                    statement.setString(1, appID);
+                    statement.setString(2, drugID);
+                    statement.addBatch(); // Add the statement to the batch
+                }
+                statement.executeBatch(); // Execute the batch of insert statements
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             // SQL queries for updating the database tables
+            String sql = "SELECT patientID FROM Current_Appointment WHERE appointmentID = ?";
+            try (PreparedStatement statement2 = connection.prepareStatement(sql)) {
+                // Set the parameter
+                statement2.setString(1, appID);
+                // Execute the query
+                try (ResultSet resultSet = statement2.executeQuery()) {
+                    // Check if a result is returned
+                    if (resultSet.next()) {
+                        // Retrieve the patientID
+                        String patientID = resultSet.getString("patientID");
+                        String sql2 = "{CALL create_medical_receipt(?, ? ,?, ?, ?, ?, ?, ?, ?, ?,?)}";
+                        try (CallableStatement statement = connection.prepareCall(sql2)) {
+                            // Set the parameters
+                            statement.setString(1, appID);
+                            statement.setString(2, patientID);
+                            statement.setString(3, nameField_);
+                            statement.setInt(4, Integer.parseInt(ageField_));
+                            statement.setString(5, addField_);
+                            statement.setString(6, genderField_);
+                            statement.setDouble(7, Double.parseDouble(heightField_));
+                            statement.setDouble(8, Double.parseDouble(weightField_));
+                            statement.setString(9, datepresField_);
+                            statement.setString(10, diagnosisField_);
+                            statement.setString(11, createNewPDF());
 
-            String updateAppointmentQuery = "UPDATE medic_history.`appointment` SET appointment_date = CURRENT_TIMESTAMP, diagnosis = ?, prescription = NULL, paymentreceived = NULL, paymentdue = NULL, pdf_url = NULL, is_confirmed = 0 WHERE appointmentID = ?";
-            //
-            //            String updateCurrentAppointmentQuery = "UPDATE `medic_history`.`Current_Appointment` "
-            //                    + "SET `appointmentID` = ?, `doctorID` = ?, `patientID` = ? "
-            //                    + "WHERE `appointmentID` = ? AND `doctorID` = ? AND `patientID` = ?";
-            //
-            //            String updatePatientQuery = "UPDATE `medic_history`.`Patient` "
-            //                    + "SET `name` = ?, `gender` = ?, "
-            //                    + "`age` = ?, `weight` = ?, `height` = ?, `address` = ? "
-            //                    + "WHERE `patientID` = ?";
+                            // Execute the stored procedure
+                            statement.execute();
 
-            // Prepare statements
-            PreparedStatement updateAppointmentStmt = connection.prepareStatement(updateAppointmentQuery);
-            //            PreparedStatement updateCurrentAppointmentStmt = connection.prepareStatement(updateCurrentAppointmentQuery);
-            //            PreparedStatement updatePatientStmt = connection.prepareStatement(updatePatientQuery);
+                            JOptionPane.showMessageDialog(this, "Medical receipt saved successfully to the database!");
+                        }
 
-            // Set parameter values for the appointment table update
-            updateAppointmentStmt.setString(1, diagnosisField_); // diagnosis
-            updateAppointmentStmt.setString(2, appID); // appointmentID (for the WHERE clause)
-
-            // Set parameter values for the Current_Appointment table update
-            // ... (set parameter values based on the data extracted from the JTextFields)
-            // Set parameter values for the Patient table update
-            //            updatePatientStmt.setString(1, nameField_); // name
-            //            updatePatientStmt.setString(2, genderField_); // gender
-            //            updatePatientStmt.setString(3, ageField_); // age
-            //            updatePatientStmt.setString(4, weightField_); // weight
-            //            updatePatientStmt.setString(5, heightField_); // height
-            //
-            //            updatePatientStmt.setString(6, addField_); // address
-            //            updatePatientStmt.setString(7, appID); // patientID (for the WHERE clause)
-            //
-            //
-            updateAppointmentStmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Medical Reciept saved successfully to database");
-            //            updateCurrentAppointmentStmt.executeUpdate();
-            //            updatePatientStmt.executeUpdate();
+                    }
+                }
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(DoctorRecieptUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -1041,8 +1043,6 @@ System.out.println("hello3");
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         AppID = AppointmentField.getText();
-       
-        
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT p.`name`, p.`age`, p.`address`, p.`gender`, p.`height`, p.`weight` "
@@ -1107,9 +1107,9 @@ System.out.println("hello3");
     }//GEN-LAST:event_AppointmentFieldActionPerformed
 
     private void appointmentlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointmentlistActionPerformed
-         Docpatientlist patientlistPanel;
+        Docpatientlist patientlistPanel;
         try {
-            patientlistPanel = new Docpatientlist(docID,docName,email);
+            patientlistPanel = new Docpatientlist(docID, docName, email);
             patientlistPanel.setVisible(true);
             this.dispose();
         } catch (SQLException ex) {
@@ -1117,17 +1117,13 @@ System.out.println("hello3");
         }
 
         // Show the patient panel GUI
-      
-        
-
         // Dispose or hide the login GUI
-        
+
     }//GEN-LAST:event_appointmentlistActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AppointmentField;

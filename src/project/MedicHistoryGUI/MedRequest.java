@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -72,11 +73,13 @@ public class MedRequest extends javax.swing.JFrame {
             String name=null;
             String phoneno=null;
             String address=null;
+//            Timestamp date=null;
+             java.sql.Timestamp date;
             String appointmentID=null;
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '0'");
+             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber),(appointment.appointment_date) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '0' order by appointment.appointment_date desc");
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
@@ -87,8 +90,9 @@ public class MedRequest extends javax.swing.JFrame {
         phoneno=rs1.getString("phonenumber");
         address=rs1.getString("address");
         appointmentID=rs1.getString("appointmentID");
+        date = rs1.getTimestamp("appointment_date");
         System.out.println(appointmentID);
-        dynamiccell(name,phoneno,address,appointmentID);
+        dynamiccell(name,phoneno,address,appointmentID,date);
         //System.out.println("called");
                  }
                  else{
@@ -105,7 +109,7 @@ public class MedRequest extends javax.swing.JFrame {
     }
     
 //    welcomeDoctorName.setText(this.name+"👋");
-private void dynamiccell(String name,String phoneno,String address,String appointmentID)//for creating the dynamic cells having info about patients 
+private void dynamiccell(String name,String phoneno,String address,String appointmentID,java.sql.Timestamp date)//for creating the dynamic cells having info about patients 
 {   
     
     javax.swing.JPanel cell;
@@ -117,11 +121,13 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     javax.swing.JLabel j1 = new javax.swing.JLabel();
     javax.swing.JLabel j2 = new javax.swing.JLabel();
     javax.swing.JLabel j3 = new javax.swing.JLabel();
+    javax.swing.JLabel j4 = new javax.swing.JLabel();
     javax.swing.JButton accept = new javax.swing.JButton();
     javax.swing.JButton decline = new javax.swing.JButton();
     javax.swing.JLabel name1 = new javax.swing.JLabel();
     javax.swing.JLabel address1 = new javax.swing.JLabel();
     javax.swing.JLabel phone = new javax.swing.JLabel();
+    javax.swing.JLabel date1 = new javax.swing.JLabel();
     
     cell.setBackground(new java.awt.Color(102, 102, 242));
     cell.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -137,6 +143,9 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     j3.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     j3.setForeground(new java.awt.Color(242, 242, 242));
     j3.setText("Phone No.:");
+    j4.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+    j4.setForeground(new java.awt.Color(242, 242, 242));
+    j4.setText("Date.:");
 
     accept.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     accept.setForeground(new java.awt.Color(0, 204, 0));
@@ -170,6 +179,10 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     phone.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     phone.setForeground(new java.awt.Color(242, 242, 242));
     phone.setText(phoneno);
+   
+    date1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+    date1.setForeground(new java.awt.Color(242, 242, 242));
+    date1.setText(date.toString());
 
     
     
@@ -213,33 +226,38 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
 //                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 //    );
 
-cellLayout.setHorizontalGroup(
-    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-    .addGroup(cellLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cellLayout.createSequentialGroup()
-                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cellLayout.createSequentialGroup()
-                        .addComponent(j2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(address1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(cellLayout.createSequentialGroup()
-                        .addComponent(j3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(47, 47, 47))
-            .addGroup(cellLayout.createSequentialGroup()
-                .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(name1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(cellLayout.createSequentialGroup()
-                .addComponent(accept)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(decline)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-);
+//cellLayout.setHorizontalGroup(
+//    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//        .addGroup(cellLayout.createSequentialGroup()
+//            .addContainerGap()
+//            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                .addGroup(cellLayout.createSequentialGroup()
+//                    .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(cellLayout.createSequentialGroup()
+//                            .addComponent(j2)
+//                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                            .addComponent(address1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                        .addGroup(cellLayout.createSequentialGroup()
+//                            .addComponent(j3)
+//                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+//                    .addGap(47, 47, 47))
+//                .addGroup(cellLayout.createSequentialGroup()
+//                    .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                    .addComponent(name1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//                .addGroup(cellLayout.createSequentialGroup()
+//                    .addComponent(j4) // Add this line to include the j4 label
+//                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                    .addComponent(date1) // Position date1 label after j4 label
+//                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//                .addGroup(cellLayout.createSequentialGroup()
+//                    .addComponent(accept)
+//                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                    .addComponent(decline)
+//                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+//));
 //cellLayout.setHorizontalGroup(
 //    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //    .addGroup(cellLayout.createSequentialGroup()
@@ -294,27 +312,64 @@ cellLayout.setHorizontalGroup(
 //            .addContainerGap(16, Short.MAX_VALUE))
 //    );
 
+cellLayout.setHorizontalGroup(
+    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(cellLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cellLayout.createSequentialGroup()
+                    .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(cellLayout.createSequentialGroup()
+                            .addComponent(j2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(address1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(cellLayout.createSequentialGroup()
+                            .addComponent(j3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(47, 47, 47))
+                .addGroup(cellLayout.createSequentialGroup()
+                    .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(name1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(cellLayout.createSequentialGroup()
+                    .addComponent(j4) // Add this line to include the j4 label
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(date1) // Position date1 label after j4 label
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(cellLayout.createSequentialGroup()
+                    .addComponent(accept)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(decline)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+));
 cellLayout.setVerticalGroup(
     cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-    .addGroup(cellLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(j1)
-            .addComponent(name1))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(j2)
-            .addComponent(address1))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(j3)
-            .addComponent(phone))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(accept)
-            .addComponent(decline))
-        .addContainerGap(16, Short.MAX_VALUE))
+        .addGroup(cellLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j1)
+                .addComponent(name1))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j2)
+                .addComponent(address1))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j3)
+                .addComponent(phone))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j4) // Add j4 label after phone label
+                .addComponent(date1)) // Add date1 label after j4 label
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(accept)
+                .addComponent(decline))
+            .addContainerGap(16, Short.MAX_VALUE))
 );
+
 //cellLayout.setVerticalGroup(
 //    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //    .addGroup(cellLayout.createSequentialGroup()
@@ -347,6 +402,7 @@ JPanel cellPanel = (JPanel) deleteButton.getParent();
 jPanel1.remove(cellPanel);
  // Call method to delete patient from database passing appointmentID
 deletePatientFromDatabase(appointmentID);
+deletePatientdetails(appointmentID);
 jPanel1.revalidate();
 jPanel1.repaint();
 }
@@ -373,6 +429,26 @@ try (Connection connection = DatabaseConnection.getConnection()) {
             System.out.println("Patient removed from current appointment.");
         } else {
             System.out.println("Patient not found in current appointment.");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(MedRequest.class.getName()).log(Level.SEVERE, null, ex);
+    }
+} catch (SQLException ex) {
+    Logger.getLogger(MedRequest.class.getName()).log(Level.SEVERE, null, ex);
+}
+}
+private void deletePatientdetails(String appointmentID) {
+System.out.println(appointmentID);
+
+try (Connection connection = DatabaseConnection.getConnection()) {
+    String sql = "DELETE FROM appointment WHERE appointmentID = ?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, appointmentID);
+        int rowsAffected = preparedStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Patient removed from appointment.");
+        } else {
+            System.out.println("Patient not found in appointment.");
         }
     } catch (SQLException ex) {
         Logger.getLogger(MedRequest.class.getName()).log(Level.SEVERE, null, ex);

@@ -73,10 +73,12 @@ public class Docpatientlist extends javax.swing.JFrame {
             String phoneno=null;
             String address=null;
             String appointmentID=null;
+            java.sql.Timestamp date;
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '1'");
+//             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '1'");
+                          rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber),(appointment.appointment_date) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '1' order by appointment.appointment_date desc" );
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
@@ -86,7 +88,8 @@ public class Docpatientlist extends javax.swing.JFrame {
         phoneno=rs1.getString("phonenumber");
         address=rs1.getString("address");
         appointmentID=rs1.getString("appointmentID");
-        dynamiccell(name,phoneno,address,appointmentID);
+        date=rs1.getTimestamp("appointment_date");
+        dynamiccell(name,phoneno,address,appointmentID,date);
         //System.out.println("called");
                  }
                  else{
@@ -103,7 +106,7 @@ public class Docpatientlist extends javax.swing.JFrame {
     }
     
 //    welcomeDoctorName.setText(this.name+"👋");
-    private void dynamiccell(String name,String phoneno,String address,String appointmentID)//for creating the dynamic cells having info about patients 
+    private void dynamiccell(String name,String phoneno,String address,String appointmentID,java.sql.Timestamp date)//for creating the dynamic cells having info about patients 
     {   
         
         javax.swing.JPanel cell;
@@ -118,6 +121,8 @@ public class Docpatientlist extends javax.swing.JFrame {
         javax.swing.JLabel AppointmentID = new javax.swing.JLabel();
         javax.swing.JLabel PatientAddressField = new javax.swing.JLabel();
         javax.swing.JLabel PatientPhoneNo = new javax.swing.JLabel();
+        javax.swing.JLabel date1 = new javax.swing.JLabel();
+        javax.swing.JLabel j4=new javax.swing.JLabel();
         javax.swing.JButton delete = new javax.swing.JButton();
         
         PatientNameField.setFont(new java.awt.Font("Microsoft Tai Le", 1, 14)); // NOI18N
@@ -135,10 +140,17 @@ public class Docpatientlist extends javax.swing.JFrame {
         PatientPhoneNo.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
         PatientPhoneNo.setForeground(new java.awt.Color(255,255,255));
         PatientPhoneNo.setText(phoneno);
-
+        
+        date1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+        date1.setForeground(new java.awt.Color(255,255,255));
+        date1.setText((date.toString()).substring(0, 10));
+        j4.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+        j4.setForeground(new java.awt.Color(242, 242, 242));
+        j4.setText("Date.:");
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setForeground(new java.awt.Color(255, 51, 51));
         delete.setText("Delete");
+        delete.setVisible(false);
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteActionPerformed(evt,appointmentID);
@@ -148,39 +160,42 @@ public class Docpatientlist extends javax.swing.JFrame {
 
         javax.swing.GroupLayout cellLayout = new javax.swing.GroupLayout(cell);
         cell.setLayout(cellLayout);
-        cellLayout.setHorizontalGroup(
-            cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cellLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cellLayout.createSequentialGroup()
-                        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PatientAddressField)
-                            .addComponent(PatientNameField))
-                            .addComponent(AppointmentID)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(cellLayout.createSequentialGroup()
-                        .addComponent(PatientPhoneNo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(delete)
-                        .addGap(47, 47, 47))))
-//                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-        );
-        cellLayout.setVerticalGroup(
-            cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cellLayout.createSequentialGroup()
-                .addContainerGap()
+cellLayout.setHorizontalGroup(
+    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(cellLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(PatientNameField)
-                 .addComponent(AppointmentID)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AppointmentID)
                 .addComponent(PatientAddressField)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGap(25,25,25)
-                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(cellLayout.createSequentialGroup()
                     .addComponent(PatientPhoneNo)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(delete))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                .addGroup(cellLayout.createSequentialGroup()
+                    .addComponent(j4)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(date1)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+);
+cellLayout.setVerticalGroup(
+    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(cellLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(PatientNameField)
+            .addComponent(AppointmentID)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(PatientAddressField)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j4)
+                .addComponent(date1))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(PatientPhoneNo)
+                .addComponent(delete))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+);
+
 
         jPanel1.add(cell);
         jPanel1.revalidate();
