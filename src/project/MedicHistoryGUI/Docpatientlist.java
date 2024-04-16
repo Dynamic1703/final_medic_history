@@ -53,7 +53,7 @@ public class Docpatientlist extends javax.swing.JFrame {
       try (Connection connection = DatabaseConnection.getConnection()){
     Statement stmt = connection.createStatement();
     ResultSet rs;
-     rs = stmt.executeQuery("select ca.doctorID, COUNT(ca.patientID) as num_patients FROM current_appointment ca join appointment a ON ca.appointmentID = a.appointmentID where ca.doctorID = '" + doctorID + "' AND a.is_confirmed = '1'");
+     rs = stmt.executeQuery("select ca.doctorID, COUNT(ca.patientID) as num_patients FROM appointment ca join appointment_details a ON ca.appointmentID = a.appointmentID where ca.doctorID = '" + doctorID + "' AND a.is_confirmed = '1' AND a.is_completed='0'");
    
     // Check if the result set has any rows
     if (rs.next()) {
@@ -77,8 +77,8 @@ public class Docpatientlist extends javax.swing.JFrame {
              try (Connection connection1 = DatabaseConnection.getConnection()){
              Statement stmt1 = connection1.createStatement();
              ResultSet rs1;
-//             rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '1'");
-                          rs1 = stmt1.executeQuery("select distinct(current_appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber),(appointment.appointment_date) from current_appointment join patient join doctor join appointment where current_appointment.doctorID= '"+ doctorID +"' and current_appointment.patientID=patient.patientID and current_appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '1' order by appointment.appointment_date desc" );
+//             rs1 = stmt1.executeQuery("select distinct(appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber) from appointment join patient join doctor join appointment_details where appointment.doctorID= '"+ doctorID +"' and appointment.patientID=patient.patientID and appointment.appointmentID=appointment.appointmentID and appointment.is_confirmed= '1'");
+                          rs1 = stmt1.executeQuery("select distinct(appointment.appointmentID),(patient.name),(patient.address),(patient.phonenumber),(appointment_details.appointment_date) from appointment join patient join doctor join appointment_details where appointment.doctorID= '"+ doctorID +"' and appointment.patientID=patient.patientID and appointment.appointmentID=appointment_details.appointmentID and appointment_details.is_confirmed= '1' and appointment_details.is_completed='0' order by appointment_details.appointment_date desc" );
           
              //System.out.println(rs1.getString("name"));
              for(int i=0;i<num;i++){
@@ -215,7 +215,7 @@ cellLayout.setVerticalGroup(
     System.out.println(appointmentID);
     
     try (Connection connection = DatabaseConnection.getConnection()) {
-        String sql = "DELETE FROM current_appointment WHERE appointmentID = ?";
+        String sql = "DELETE FROM appointment WHERE appointmentID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, appointmentID);
             int rowsAffected = preparedStatement.executeUpdate();

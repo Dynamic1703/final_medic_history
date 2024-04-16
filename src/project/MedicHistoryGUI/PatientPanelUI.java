@@ -228,7 +228,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
         try (Connection connection = DatabaseConnection.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(
-                    "SELECT d.name, d.doctorID FROM Doctor d JOIN Works w ON d.doctorID = w.doctorID JOIN Hospital h ON w.hospitalID = h.hospitalID WHERE h.name = '"
+                    "SELECT d.name, d.doctorID FROM doctor d JOIN works w ON d.doctorID = w.doctorID JOIN hospital h ON w.hospitalID = h.hospitalID WHERE h.name = '"
                     + selectedHospital + "'");
             while (rs.next()) {
                 System.out.println(rs.getString("name"));
@@ -900,11 +900,20 @@ public class PatientPanelUI extends javax.swing.JFrame {
             rs.close();
             getDoctorIDStmt.close();
 
-            String insertAppointmentQuery = "INSERT INTO appointment (appointmentID, appointment_date, diagnosis, prescription, paymentreceived, paymentdue,pdf_url,is_confirmed,appointmentName) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
+            String insertAppointmentQuery = "INSERT INTO appointment_details (appointmentID, appointment_date, diagnosis, prescription, paymentreceived, paymentdue,pdf_url,is_confirmed,is_completed,appointmentName) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
             PreparedStatement insertAppointmentStmt = connection.prepareStatement(insertAppointmentQuery,
                     Statement.RETURN_GENERATED_KEYS);
             UUID uuid = UUID.randomUUID();
             String ApID = uuid.toString();
+
+            String insertCurrentAppointmentQuery = "INSERT INTO appointment (appointmentID, doctorID, patientID) VALUES (?, ?, ?)";
+            PreparedStatement insertCurrentAppointmentStmt = connection.prepareStatement(insertCurrentAppointmentQuery);
+            insertCurrentAppointmentStmt.setString(1, ApID);
+            insertCurrentAppointmentStmt.setString(2, doctorID);
+            insertCurrentAppointmentStmt.setString(3, patientID);
+            insertCurrentAppointmentStmt.executeUpdate();
+            insertCurrentAppointmentStmt.close();
+            
             insertAppointmentStmt.setString(1, ApID);
             insertAppointmentStmt.setString(2, ApDate);
             insertAppointmentStmt.setString(3, ""); // Set the diagnosis (you can prompt the user for input)
@@ -913,17 +922,13 @@ public class PatientPanelUI extends javax.swing.JFrame {
             insertAppointmentStmt.setInt(6, 0); // Set the paymentdue value (you can prompt the user for input)
             insertAppointmentStmt.setString(7, ""); // Set the pdf_url (you can prompt the user for input)
             insertAppointmentStmt.setBoolean(8, false); // Set is_confirmed to false initially
-            insertAppointmentStmt.setString(9, ApTitle_s);
+            insertAppointmentStmt.setBoolean(9, false); // Set is_confirmed to false initially
+            
+            insertAppointmentStmt.setString(10, ApTitle_s);
 
             insertAppointmentStmt.executeUpdate();
 
-            String insertCurrentAppointmentQuery = "INSERT INTO Current_Appointment (appointmentID, doctorID, patientID) VALUES (?, ?, ?)";
-            PreparedStatement insertCurrentAppointmentStmt = connection.prepareStatement(insertCurrentAppointmentQuery);
-            insertCurrentAppointmentStmt.setString(1, ApID);
-            insertCurrentAppointmentStmt.setString(2, doctorID);
-            insertCurrentAppointmentStmt.setString(3, patientID);
-            insertCurrentAppointmentStmt.executeUpdate();
-            insertCurrentAppointmentStmt.close();
+            
             callandCreatePanels();
             JOptionPane.showMessageDialog(null, "Appointment made successfully");
             AppointmentDialog.dispose();

@@ -42,7 +42,7 @@ import java.awt.GridBagLayout;
  * @author HP
  */
 public class time extends javax.swing.JFrame {
-    static class Pair<K, V, M , N, O, P,Q,R> {
+    static class Pair<K, V, M , N, O, P,Q,R,S> {
         private K key;
         private V aid;
         private M did;
@@ -51,8 +51,9 @@ public class time extends javax.swing.JFrame {
         private P drn;
         private Q apn;
         private R cnf;
+        private S cmp;
 
-        public Pair(K key,V aid,M did,N dgns,O prs,P drn,Q apn,R cnf) {
+        public Pair(K key,V aid,M did,N dgns,O prs,P drn,Q apn,R cnf,S cmp) {
             this.key = key;
             this.aid = aid;
             this.did = did;
@@ -61,6 +62,7 @@ public class time extends javax.swing.JFrame {
             this.drn = drn;
             this.apn= apn;
             this.cnf=cnf;
+            this.cmp=cmp;
         }
 
         public K getKey() {
@@ -94,10 +96,15 @@ public class time extends javax.swing.JFrame {
         public R getcnf() {
             return cnf;
         }
+        
+        public S getcmp(){
+            return cmp;
+        }
+        
     }
-static class TimestampDataComparator implements Comparator<Pair<String, String,String, String,String, String,String,Integer>> {
+static class TimestampDataComparator implements Comparator<Pair<String, String,String, String,String, String,String,Integer,Integer>> {
     @Override
-    public int compare(Pair<String, String,String, String,String, String,String,Integer> pair1, Pair<String, String,String, String,String, String,String,Integer> pair2) {
+    public int compare(Pair<String, String,String, String,String, String,String,Integer,Integer> pair1, Pair<String, String,String, String,String, String,String,Integer,Integer> pair2) {
         System.out.println("Comparing pair1: " + pair1 + " with pair2: " + pair2);
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -126,8 +133,9 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
                 ArrayList<String> prescription=new ArrayList<>();
                 ArrayList<String> drname=new ArrayList<>();
                 ArrayList<Integer> confirm=new ArrayList<>();
+                ArrayList<Integer> completed=new ArrayList<>();
 //                 private static final Color[] CELL_COLORS = {Color.BLUE, Color.GREEN, Color.ORANGE, Color.YELLOW}; 
-                ArrayList<Pair<String, String,String, String,String, String,String,Integer>> timestampDataPairs = new ArrayList<>();
+                ArrayList<Pair<String, String,String, String,String, String,String,Integer,Integer>> timestampDataPairs = new ArrayList<>();
 //   Creates new form timelineGUI
                  String patientID;
     public time(String patientID)  {
@@ -144,7 +152,7 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
         Statement statement = connection.createStatement();
         
             // Execute the query
-            String query = "SELECT appointmentID,doctorID FROM current_appointment WHERE patientID = '" + patientID+"'";
+            String query = "SELECT appointmentID,doctorID FROM appointment WHERE patientID = '" + patientID+"'";
             
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -179,7 +187,7 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
             int i=0;
              for (String element : appointmentIds) {
 //                 System.out.println(element);
-       String query = "SELECT * FROM appointment where appointmentID= '"+element+"'"; // Modify query according to your table
+       String query = "SELECT * FROM appointment_details where appointmentID= '"+element+"'"; // Modify query according to your table
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 // Assuming your table has columns named 'column1', 'column2', etc.
@@ -188,12 +196,13 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
                 String column3Value = resultSet.getString("prescription");
                 String column4Value=resultSet.getString("appointmentName");
                 int confirmation=Integer.parseInt(resultSet.getString("is_confirmed"));
+                int complete=Integer.parseInt(resultSet.getString("is_completed"));
                 date.add(column1Value);
                 diagnosis.add(column2Value);
                 prescription.add(column3Value);
                 appointmentName.add(column4Value);
                 confirm.add(confirmation);
-                
+                completed.add(complete);
             }++i;}
 ////             
             
@@ -217,12 +226,12 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
 //   
 for (int j=0;j<appointmentIds.size();j++) {
                  
-                 timestampDataPairs.add(new Pair<>(date.get(j),appointmentIds.get(j),doctorIds.get(j),diagnosis.get(j),prescription.get(j),drname.get(j),appointmentName.get(j),confirm.get(j)));
+                 timestampDataPairs.add(new Pair<>(date.get(j),appointmentIds.get(j),doctorIds.get(j),diagnosis.get(j),prescription.get(j),drname.get(j),appointmentName.get(j),confirm.get(j),completed.get(j)));
              }
              System.out.println("Size of timestampDataPairs: " + timestampDataPairs.size());
              Collections.sort(timestampDataPairs, new TimestampDataComparator());
              int j=0;
-             for (Pair<String, String,String, String,String, String,String,Integer> pair : timestampDataPairs) {
+             for (Pair<String, String,String, String,String, String,String,Integer,Integer> pair : timestampDataPairs) {
             appointmentIds.set(j,pair.getaid());
             date.set(j,pair.getKey());
             doctorIds.set(j,pair.getdid());
@@ -231,6 +240,7 @@ for (int j=0;j<appointmentIds.size();j++) {
             drname.set(j,pair.getdrn());
             appointmentName.set(j,pair.getapn());
             confirm.set(j,pair.getcnf() );
+            completed.set(j,pair.getcmp());
             ++j;
         }
        generateDynamicLabels(appointmentIds.size());
@@ -266,20 +276,22 @@ for (int j=0;j<appointmentIds.size();j++) {
         PatientNameF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PatientNameF.setText("PatientName");
 
-        jButton6.setBackground(new java.awt.Color(204, 204, 204));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton6.setText("Home");
+        jButton6.setBackground(new java.awt.Color(102, 102, 255));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("HOME");
         jButton6.setToolTipText("");
-        jButton6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
 
-        jButton9.setBackground(new java.awt.Color(204, 204, 204));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton9.setText("Doctors Consulted");
+        jButton9.setBackground(new java.awt.Color(102, 102, 255));
+        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("DOCTORS CONSULTED");
         jButton9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,24 +309,20 @@ for (int j=0;j<appointmentIds.size();j++) {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(4, 4, 4)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGap(8, 8, 8)
-                                                .addComponent(PatientNameF, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                                        .addGap(8, 8, 8)
+                                        .addComponent(PatientNameF, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 9, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,16 +331,16 @@ for (int j=0;j<appointmentIds.size();j++) {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(PatientNameF)
                 .addGap(19, 19, 19))
         );
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -342,7 +350,7 @@ for (int j=0;j<appointmentIds.size();j++) {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,6 +432,7 @@ try {
             String pres = prescription.get(i);
             String appID=appointmentName.get(i);
             int cnfm=confirm.get(i);
+            int comp=completed.get(i);
             String dates = date.get(i).substring(0, 10);
             String time=date.get(i).substring(10);
             PatientNameField.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -451,7 +460,7 @@ try {
                 // Action to perform when button is clicked
                 // Open detailed panel
                 
-                showDetailsPanel(docname,diag,pres,cnfm);
+                showDetailsPanel(docname,diag,pres,cnfm,comp);
             });
 
             // Add components to the cell panel
@@ -476,7 +485,7 @@ try {
     
 
 
-   private void showDetailsPanel(String doctorName, String diagnosis, String prescription,int cnfm) {
+   private void showDetailsPanel(String doctorName, String diagnosis, String prescription,int cnfm,int comp) {
     // Create a new frame for the details panel
     JFrame detailsFrame = new JFrame();
     detailsFrame.setTitle("Details for Treatment");
@@ -494,13 +503,15 @@ try {
     labelsPanel.setBackground(Color.LIGHT_GRAY); // Match background color
     detailsPanel.add(labelsPanel, BorderLayout.NORTH); // Add labelsPanel to detailsPanel at the top
      
-    JLabel cnfLabel1 = new JLabel("<html><div style='font-size: 14px;'><b>Status: </b>" + "Accepted by Doctor"+ "</div></html>");
-    JLabel cnfLabel2 = new JLabel("<html><div style='font-size: 14px;'><b>Status: </b>" + "Rejected by Doctor"+ "</div></html>");
+    JLabel cnfLabel1 = new JLabel("<html><div style='font-size: 14px;'><b>Status: </b>" + "Future Appointment"+ "</div></html>");
+    JLabel cnfLabel2 = new JLabel("<html><div style='font-size: 14px;'><b>Status: </b>" + "Confirmation Awaited by Doctor"+ "</div></html>");
+     JLabel cnfLabel3 = new JLabel("<html><div style='font-size: 14px;'><b>Status: </b>" + "Past Appointment"+ "</div></html>");
     // Add doctor name label
     
     JLabel doctorNameLabel = new JLabel("<html><div style='font-size: 14px;'><b>Doctor Name: </b>" + doctorName + "</div></html>");
     labelsPanel.add(doctorNameLabel);
 if(cnfm==1){
+    if(comp==1){
 labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
 
 // Add description label
@@ -508,11 +519,25 @@ JLabel descriptionLabel = new JLabel("<html><div style='font-size: 14px;'><b>Dia
 labelsPanel.add(descriptionLabel);
 
 // Add prescription label
-JLabel prescriptionLabel = new JLabel("<html><div style='font-size: 14px;'><b>Prescription: </b>" + prescription + "</div></html>");
-labelsPanel.add(prescriptionLabel);
+//JLabel prescriptionLabel = new JLabel("<html><div style='font-size: 14px;'><b>Prescription: </b>" + prescription + "</div></html>");
+//labelsPanel.add(prescriptionLabel);
 
 // Add cnfLabel1 (assuming it's another JLabel)
-labelsPanel.add(cnfLabel1);
+labelsPanel.add(cnfLabel3);}
+    else{
+     labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
+
+// Add description label
+//JLabel descriptionLabel = new JLabel("<html><div style='font-size: 14px;'><b>Diagnosis: </b>" + diagnosis + "</div></html>");
+//labelsPanel.add(descriptionLabel);
+
+// Add prescription label
+//JLabel prescriptionLabel = new JLabel("<html><div style='font-size: 14px;'><b>Prescription: </b>" + prescription + "</div></html>");
+//labelsPanel.add(prescriptionLabel);
+
+// Add cnfLabel1 (assuming it's another JLabel)
+labelsPanel.add(cnfLabel1);   
+    }
 
 // Add the labelsPanel to your container panel (e.g., jPanel1)
 

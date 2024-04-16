@@ -1001,7 +1001,7 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
             }
 
             // SQL queries for updating the database tables
-            String sql = "SELECT patientID FROM Current_Appointment WHERE appointmentID = ?";
+            String sql = "SELECT patientID FROM appointment WHERE appointmentID = ?";
             try (PreparedStatement statement2 = connection.prepareStatement(sql)) {
                 // Set the parameter
                 statement2.setString(1, appID);
@@ -1047,7 +1047,7 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT p.`name`, p.`age`, p.`address`, p.`gender`, p.`height`, p.`weight` "
                     + "FROM `medic_history`.`Patient` p "
-                    + "JOIN `medic_history`.`Current_Appointment` ca ON p.`patientID` = ca.`patientID` "
+                    + "JOIN `medic_history`.`appointment` ca ON p.`patientID` = ca.`patientID` "
                     + "WHERE ca.`appointmentID` = ?";
 
             PreparedStatement statement = connection.prepareStatement(query);
