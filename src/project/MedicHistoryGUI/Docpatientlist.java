@@ -123,6 +123,8 @@ public class Docpatientlist extends javax.swing.JFrame {
         javax.swing.JLabel PatientPhoneNo = new javax.swing.JLabel();
         javax.swing.JLabel date1 = new javax.swing.JLabel();
         javax.swing.JLabel j4=new javax.swing.JLabel();
+        javax.swing.JLabel j5=new javax.swing.JLabel();
+        javax.swing.JLabel time1=new javax.swing.JLabel();
         javax.swing.JButton delete = new javax.swing.JButton();
         
         PatientNameField.setFont(new java.awt.Font("Microsoft Tai Le", 1, 14)); // NOI18N
@@ -147,10 +149,16 @@ public class Docpatientlist extends javax.swing.JFrame {
         j4.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
         j4.setForeground(new java.awt.Color(242, 242, 242));
         j4.setText("Date.:");
+        time1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+        time1.setForeground(new java.awt.Color(255,255,255));
+        time1.setText((date.toString()).substring(11));
+        j5.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+        j5.setForeground(new java.awt.Color(242, 242, 242));
+        j5.setText("Time:");
         delete.setBackground(new java.awt.Color(255, 255, 255));
-        delete.setForeground(new java.awt.Color(255, 51, 51));
-        delete.setText("Delete");
-        delete.setVisible(false);
+        delete.setForeground(new java.awt.Color(0, 0, 0));
+        delete.setText("Make New Prescription");
+//        delete.setVisible(false);
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteActionPerformed(evt,appointmentID);
@@ -160,41 +168,91 @@ public class Docpatientlist extends javax.swing.JFrame {
 
         javax.swing.GroupLayout cellLayout = new javax.swing.GroupLayout(cell);
         cell.setLayout(cellLayout);
-cellLayout.setHorizontalGroup(
-    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(cellLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(PatientNameField)
-                .addComponent(AppointmentID)
-                .addComponent(PatientAddressField)
-                .addGroup(cellLayout.createSequentialGroup()
-                    .addComponent(PatientPhoneNo)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(delete))
-                .addGroup(cellLayout.createSequentialGroup()
+//cellLayout.setHorizontalGroup(
+//    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//        .addGroup(cellLayout.createSequentialGroup()
+//            .addContainerGap()
+//            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                .addComponent(PatientNameField)
+//                .addComponent(AppointmentID)
+//                .addComponent(PatientAddressField)
+//                .addGroup(cellLayout.createSequentialGroup()
+//                    .addComponent(j4)
+//                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                    .addComponent(date1))
+//                .addGroup(cellLayout.createSequentialGroup()
+//                    .addComponent(PatientPhoneNo)
+//                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Add some horizontal spacing
+//                    .addComponent(delete)))
+//            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//);
+//cellLayout.setVerticalGroup(
+//    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//        .addGroup(cellLayout.createSequentialGroup()
+//            .addContainerGap()
+//            .addComponent(PatientNameField)
+//            .addComponent(AppointmentID)
+//            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//            .addComponent(PatientAddressField)
+//            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                .addComponent(j4)
+//                .addComponent(date1))
+//            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                .addComponent(PatientPhoneNo)
+//                .addComponent(delete))
+//            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//);
+        cellLayout.setHorizontalGroup(
+            cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cellLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cellLayout.createSequentialGroup()
+                        .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PatientAddressField)
+                            .addComponent(PatientNameField))
+                            .addComponent(AppointmentID)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(cellLayout.createSequentialGroup()
                     .addComponent(j4)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(date1)))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-);
-cellLayout.setVerticalGroup(
-    cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(cellLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(PatientNameField)
-            .addComponent(AppointmentID)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(PatientAddressField)
-            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(date1))
+                     .addGroup(cellLayout.createSequentialGroup()
+                    .addComponent(j5)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(time1))
+                    .addGroup(cellLayout.createSequentialGroup()
+                        .addComponent(PatientPhoneNo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delete)
+                        .addGap(47, 47, 47))))
+                
+//                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+        );
+        cellLayout.setVerticalGroup(
+            cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cellLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PatientNameField)
+                 .addComponent(AppointmentID)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PatientAddressField)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(25,25,25)
+                             .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(j4)
                 .addComponent(date1))
+                    .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j5)
+                .addComponent(time1))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(PatientPhoneNo)
-                .addComponent(delete))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-);
+                .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PatientPhoneNo)
+                    .addComponent(delete))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
 
 
         jPanel1.add(cell);
@@ -203,13 +261,10 @@ cellLayout.setVerticalGroup(
     }
     
     private void deleteActionPerformed(ActionEvent evt,String appointmentID) {
-    JButton deleteButton = (JButton) evt.getSource();
-    JPanel cellPanel = (JPanel) deleteButton.getParent();
-    jPanel1.remove(cellPanel);
-     // Call method to delete patient from database passing appointmentID
-    deletePatientFromDatabase(appointmentID);
-    jPanel1.revalidate();
-    jPanel1.repaint();
+    DoctorRecieptUI docrec=new DoctorRecieptUI(docID,docName,email);
+    docrec.copyaction(appointmentID);
+    docrec.setVisible(true);
+    this.dispose();
 }
     private void deletePatientFromDatabase(String appointmentID) {
     System.out.println(appointmentID);

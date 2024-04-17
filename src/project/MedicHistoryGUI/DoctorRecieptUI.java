@@ -1040,10 +1040,38 @@ public class DoctorRecieptUI extends javax.swing.JFrame {
             Logger.getLogger(DoctorRecieptUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+    public void copyaction(String appointmentID)
+    {
+        AppointmentField.setText(appointmentID);
+        AppID=appointmentID;
+                try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT p.`name`, p.`age`, p.`address`, p.`gender`, p.`height`, p.`weight` "
+                    + "FROM `medic_history`.`Patient` p "
+                    + "JOIN `medic_history`.`appointment` ca ON p.`patientID` = ca.`patientID` "
+                    + "WHERE ca.`appointmentID` = ?";
 
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, AppID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                nameField.setText(resultSet.getString("name"));
+                ageField.setText(String.valueOf(resultSet.getInt("age")));
+                addField.setText(resultSet.getString("address"));
+                genderField.setText(resultSet.getString("gender"));
+                heightField.setText(String.valueOf(resultSet.getDouble("height")));
+                weightField.setText(String.valueOf(resultSet.getDouble("weight")));
+            } else {
+                // lite
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         AppID = AppointmentField.getText();
-
+        
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT p.`name`, p.`age`, p.`address`, p.`gender`, p.`height`, p.`weight` "
                     + "FROM `medic_history`.`Patient` p "

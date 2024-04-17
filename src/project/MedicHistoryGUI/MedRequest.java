@@ -122,12 +122,14 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     javax.swing.JLabel j2 = new javax.swing.JLabel();
     javax.swing.JLabel j3 = new javax.swing.JLabel();
     javax.swing.JLabel j4 = new javax.swing.JLabel();
+    javax.swing.JLabel j5 = new javax.swing.JLabel();
     javax.swing.JButton accept = new javax.swing.JButton();
     javax.swing.JButton decline = new javax.swing.JButton();
     javax.swing.JLabel name1 = new javax.swing.JLabel();
     javax.swing.JLabel address1 = new javax.swing.JLabel();
     javax.swing.JLabel phone = new javax.swing.JLabel();
     javax.swing.JLabel date1 = new javax.swing.JLabel();
+    javax.swing.JLabel time1 = new javax.swing.JLabel();
     
     cell.setBackground(new java.awt.Color(102, 102, 242));
     cell.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -146,7 +148,9 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
     j4.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     j4.setForeground(new java.awt.Color(242, 242, 242));
     j4.setText("Date.:");
-
+        j5.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+    j5.setForeground(new java.awt.Color(242, 242, 242));
+    j5.setText("Time.:");
     accept.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     accept.setForeground(new java.awt.Color(0, 204, 0));
     accept.setText("Accept");
@@ -182,7 +186,12 @@ private void dynamiccell(String name,String phoneno,String address,String appoin
    
     date1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
     date1.setForeground(new java.awt.Color(242, 242, 242));
-    date1.setText(date.toString());
+    date1.setText((date.toString().substring(0,10)));
+     time1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 12)); // NOI18N
+    time1.setForeground(new java.awt.Color(242, 242, 242));
+    time1.setText((date.toString().substring(11)));
+    
+    
 
     
     
@@ -339,6 +348,11 @@ cellLayout.setHorizontalGroup(
                     .addComponent(date1) // Position date1 label after j4 label
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(cellLayout.createSequentialGroup()
+                    .addComponent(j5) // Add this line to include the j4 label
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(time1) // Position date1 label after j4 label
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(cellLayout.createSequentialGroup()
                     .addComponent(accept)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(decline)
@@ -363,6 +377,10 @@ cellLayout.setVerticalGroup(
             .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(j4) // Add j4 label after phone label
                 .addComponent(date1)) // Add date1 label after j4 label
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(j5) // Add j4 label after phone label
+                .addComponent(time1)) // Add date1 label after j4 label
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(cellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(accept)
