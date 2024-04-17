@@ -188,7 +188,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
-
+        jButton4.setVisible(false);
         javax.swing.GroupLayout ApVisitLayout = new javax.swing.GroupLayout(ApVisit);
         ApVisit.setLayout(ApVisitLayout);
         ApVisitLayout.setHorizontalGroup(
@@ -766,7 +766,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
         jLabel14.setText("Have any medical issue? we're here to help you");
 
         jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        jLabel16.setText("Upcoming Appointments");
+        jLabel16.setText("Unconfirmed Appointments");
 
         UpcomingAppointment.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
         UpcomingAppointment.add(filler1);
