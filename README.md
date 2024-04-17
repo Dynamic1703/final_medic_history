@@ -55,11 +55,7 @@ Contributions to this project are done by
 2021B4A71306P	Saransh Agarwal
 2021B4A72759P	Mayur Agarwal
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgments
 
-We would like to express our gratitude to the open-source community for providing valuable resources and libraries that have contributed to the development of this project.
+We would like to express our gratitude to Dr Yashvardhan Sharma and Saurav SS for their continued support and contribution.
 

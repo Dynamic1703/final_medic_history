@@ -120,12 +120,12 @@ public class PatientPanelUI extends javax.swing.JFrame {
                 String condition = allergiesRS.getString("allergen_name");
                 String duration = allergiesRS.getString("duration");
                 
-                tableModel.addRow(new Object[]{condition, duration, condition});
+                tableModel.addRow(new Object[]{condition, duration, ""});
             }
             while (surgeriesRS.next()) {
                 String condition = surgeriesRS.getString("Surgery_type");
                 String duration = surgeriesRS.getString("duration");
-                tableModel.addRow(new Object[]{condition, duration, condition});
+                tableModel.addRow(new Object[]{condition, duration, ""});
             }
             
             allergiesRS.close();
@@ -382,7 +382,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel24.setText("Appointment Name");
+        jLabel24.setText("Reason For Appointment");
 
         ApTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -766,7 +766,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
         jLabel14.setText("Have any medical issue? we're here to help you");
 
         jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        jLabel16.setText("Unconfirmed Appointments");
+        jLabel16.setText("Upcoming Appointments");
 
         UpcomingAppointment.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
         UpcomingAppointment.add(filler1);
@@ -776,7 +776,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Condtions", "Duration", "Doctor Concerned"
+                "Condtions", "Duration", ""
             }
         ) {
             Class[] types = new Class [] {
