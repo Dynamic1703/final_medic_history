@@ -513,7 +513,6 @@ try (Connection connection = DatabaseConnection.getConnection()) {
         userid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(0, 0));
 
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
 
@@ -606,7 +605,7 @@ try (Connection connection = DatabaseConnection.getConnection()) {
         jPanel1.setLayout(new java.awt.GridLayout(3, 3, 10, 10));
 
         jLabel1.setFont(new java.awt.Font("Microsoft Tai Le", 1, 36)); // NOI18N
-        jLabel1.setText("UPCOMING APPOINTMENTS");
+        jLabel1.setText("Appointment Requests");
 
         userid.setFont(new java.awt.Font("Microsoft Tai Le", 1, 14)); // NOI18N
         userid.setText("User id:");

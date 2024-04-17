@@ -47,7 +47,7 @@ public class Docpatientlist extends javax.swing.JFrame {
         this.docName=docName;
         this.email=email;
         initComponents();
-        uniqueid.setText("UniqueID:-"+email);
+        uniqueid.setText("UserID:-"+email);
         docname.setText(this.docName);
         int num = 0;
       try (Connection connection = DatabaseConnection.getConnection()){
@@ -426,7 +426,7 @@ public class Docpatientlist extends javax.swing.JFrame {
         );
 
         patientlist.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        patientlist.setText("Appointment List");
+        patientlist.setText("Upcoming Appointment List");
 
         uniqueid.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         uniqueid.setText("Unique User ID:DoctorID");

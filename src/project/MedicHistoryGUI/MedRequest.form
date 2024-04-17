@@ -223,7 +223,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Microsoft Tai Le" size="36" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="UPCOMING APPOINTMENTS"/>
+        <Property name="text" type="java.lang.String" value="Appointment Requests"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="userid">
