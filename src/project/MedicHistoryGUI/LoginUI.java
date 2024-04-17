@@ -305,6 +305,7 @@ public class LoginUI extends javax.swing.JFrame {
             // Handle patient registration
             signupUI sui = new signupUI();
             sui.setVisible(true);
+            popoutFrame.dispose();
             dispose();
         }
     });
@@ -314,6 +315,7 @@ public class LoginUI extends javax.swing.JFrame {
             // Handle doctor registration
             signupUId suid = new signupUId();
             suid.setVisible(true);
+            popoutFrame.dispose();
             dispose();
         }
     });

@@ -11,6 +11,8 @@ import java.awt.BorderLayout;
 import javax.swing.Box;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.sql.Connection;
@@ -47,18 +49,18 @@ public class time extends javax.swing.JFrame {
         private V aid;
         private M did;
         private N dgns;
-        private O prs;
+        private O pdf;
         private P drn;
         private Q apn;
         private R cnf;
         private S cmp;
 
-        public Pair(K key,V aid,M did,N dgns,O prs,P drn,Q apn,R cnf,S cmp) {
+        public Pair(K key,V aid,M did,N dgns,O pdf,P drn,Q apn,R cnf,S cmp) {
             this.key = key;
             this.aid = aid;
             this.did = did;
             this.dgns =dgns;
-            this.prs = prs;
+            this.pdf = pdf;
             this.drn = drn;
             this.apn= apn;
             this.cnf=cnf;
@@ -81,8 +83,8 @@ public class time extends javax.swing.JFrame {
             return dgns;
         }
         
-        public O getprs() {
-            return prs;
+        public O getpdf() {
+            return pdf;
         }
         
         public P getdrn() {
@@ -130,7 +132,7 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
                 ArrayList<String> doctorIds=new ArrayList<>();
                 ArrayList<String> date=new ArrayList<>();
                 ArrayList<String> diagnosis=new ArrayList<>();
-                ArrayList<String> prescription=new ArrayList<>();
+                ArrayList<String> pdfurl=new ArrayList<>();
                 ArrayList<String> drname=new ArrayList<>();
                 ArrayList<Integer> confirm=new ArrayList<>();
                 ArrayList<Integer> completed=new ArrayList<>();
@@ -193,13 +195,13 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
                 // Assuming your table has columns named 'column1', 'column2', etc.
                 String column1Value = resultSet.getString("appointment_date");
                 String column2Value = resultSet.getString("diagnosis");
-                String column3Value = resultSet.getString("prescription");
+                String column3Value = resultSet.getString("pdf_url");
                 String column4Value=resultSet.getString("appointmentName");
                 int confirmation=Integer.parseInt(resultSet.getString("is_confirmed"));
                 int complete=Integer.parseInt(resultSet.getString("is_completed"));
                 date.add(column1Value);
                 diagnosis.add(column2Value);
-                prescription.add(column3Value);
+                pdfurl.add(column3Value);
                 appointmentName.add(column4Value);
                 confirm.add(confirmation);
                 completed.add(complete);
@@ -226,7 +228,7 @@ static class TimestampDataComparator implements Comparator<Pair<String, String,S
 //   
 for (int j=0;j<appointmentIds.size();j++) {
                  
-                 timestampDataPairs.add(new Pair<>(date.get(j),appointmentIds.get(j),doctorIds.get(j),diagnosis.get(j),prescription.get(j),drname.get(j),appointmentName.get(j),confirm.get(j),completed.get(j)));
+                 timestampDataPairs.add(new Pair<>(date.get(j),appointmentIds.get(j),doctorIds.get(j),diagnosis.get(j),pdfurl.get(j),drname.get(j),appointmentName.get(j),confirm.get(j),completed.get(j)));
              }
              System.out.println("Size of timestampDataPairs: " + timestampDataPairs.size());
              Collections.sort(timestampDataPairs, new TimestampDataComparator());
@@ -236,7 +238,7 @@ for (int j=0;j<appointmentIds.size();j++) {
             date.set(j,pair.getKey());
             doctorIds.set(j,pair.getdid());
             diagnosis.set(j,pair.getdgns());
-            prescription.set(j,pair.getprs());
+            pdfurl.set(j,pair.getpdf());
             drname.set(j,pair.getdrn());
             appointmentName.set(j,pair.getapn());
             confirm.set(j,pair.getcnf() );
@@ -429,7 +431,7 @@ try {
             // Set text and styles
             String docname = drname.get(i);
             String diag = diagnosis.get(i);
-            String pres = prescription.get(i);
+            String pdf = pdfurl.get(i);
             String appID=appointmentName.get(i);
             int cnfm=confirm.get(i);
             int comp=completed.get(i);
@@ -460,7 +462,7 @@ try {
                 // Action to perform when button is clicked
                 // Open detailed panel
                 
-                showDetailsPanel(docname,diag,pres,cnfm,comp);
+                showDetailsPanel(docname,diag,pdf,cnfm,comp);
             });
 
             // Add components to the cell panel
@@ -485,7 +487,7 @@ try {
     
 
 
-   private void showDetailsPanel(String doctorName, String diagnosis, String prescription,int cnfm,int comp) {
+   private void showDetailsPanel(String doctorName, String diagnosis, String pdf,int cnfm,int comp) {
     // Create a new frame for the details panel
     JFrame detailsFrame = new JFrame();
     detailsFrame.setTitle("Details for Treatment");
@@ -523,7 +525,24 @@ labelsPanel.add(descriptionLabel);
 //labelsPanel.add(prescriptionLabel);
 
 // Add cnfLabel1 (assuming it's another JLabel)
-labelsPanel.add(cnfLabel3);}
+labelsPanel.add(cnfLabel3);
+      JButton prescriptionButton = new JButton("Prescription");
+            prescriptionButton.setBackground(new java.awt.Color(102, 102, 255)); // Set background color
+            prescriptionButton.setForeground(Color.WHITE);
+            prescriptionButton.setHorizontalAlignment(SwingConstants.CENTER); // Center align the text
+            prescriptionButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Open PDF file
+                    try {
+                        Desktop.getDesktop().open(new File(pdf));
+                    } catch (Exception ex) {
+                        ex.printStackTrace(); // Handle exception appropriately
+                    }
+                }
+            });
+            labelsPanel.add(prescriptionButton);
+}
     else{
      labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
 
