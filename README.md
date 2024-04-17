@@ -21,6 +21,8 @@ The Digital Medical Receipt Management System is a Java application built using 
 2. Open NetBeans IDE and select "Open Project" from the File menu.
 3. Navigate to the project directory and select the project folder.
 4. NetBeans will automatically detect and configure the project settings.
+5. Run the SQL file `create_schema.sql` to create the schema `medic_history`:
+6. To change the MySQL password in DatabaseConnection.java, locate the file, update the password parameter, and restart the application.
 
 ## Building the Project
 
