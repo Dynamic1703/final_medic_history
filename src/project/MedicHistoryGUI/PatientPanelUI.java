@@ -382,7 +382,7 @@ public class PatientPanelUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel24.setText("Reason For Appointment");
+        jLabel24.setText("Appointment Name");
 
         ApTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
