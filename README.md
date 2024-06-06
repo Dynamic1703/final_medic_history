@@ -50,11 +50,10 @@ Upon running the application, you will be presented with the main window of the 
 
 Contributions to this project are done by
 2021B5A72792P   Harshit Nagpal
+2021B4A72759P	Mayur Agarwal
 2021B3A70870P	Aditya Agarwal
 2021B3A72786P	Vaibhav Gupta
 2021B4A71306P	Saransh Agarwal
-2021B4A72759P	Mayur Agarwal
-
 ## Acknowledgments
 
 We would like to express our gratitude to Dr Yashvardhan Sharma and Saurav SS for their continued support and contribution.
